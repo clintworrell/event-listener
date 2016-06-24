@@ -5,7 +5,7 @@ module.exports = {
   development: {
     client: 'postgresql',
     connection: {
-      database: 'events_listener'
+      database: 'event_listener'
     },
     debug: true
   },
@@ -13,7 +13,7 @@ module.exports = {
   test: {
     client: 'postgresql',
     connection: {
-      database: 'test_events_listener'
+      database: 'test_event_listener'
     },
     debug: false,
     pool: {
