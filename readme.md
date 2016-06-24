@@ -1,16 +1,18 @@
 ### A project description
-An event finder enables users to find events to attend, save them to their accounts.
+The app enables users to find events, save them, send invitation to other users and get reminders.   
+It will integrate meetup.com API and eventbrite API to get events info.
 
 ### Who uses it?
-Anyone who wants to search events, save them and get reminders before events.
+Anyone who wants an app to find events from multiple sources, save them to their accounts and get reminders before events.
 
 ### What outputs do they need?
 * List of events from search
 * List of saved events
+* Personal message box
 
 ### What inputs are needed to generate those outputs?
-* Event location
 * Event category
+* Event topic
 
 ### A list of technologies that you plan to use
 * HTML/CSS
@@ -20,14 +22,13 @@ Anyone who wants to search events, save them and get reminders before events.
 * Knex
 * Redis
 * Twilio
-* Socket.io
 * Mocha
-* API: meetup.com API, Eventbrite API
+* (Maybe) Socket.io
 
 ### A well-defined and written-out feature list
 * Search events
 * Save events
 * Send reminders for events
-* Chat room for users
-* (Stretch goal) Invitation to attend events using email
-* (Super Stretch goal) Calendar
+* Send invitation/personal message to other users
+* (Stretch goal) Chat room for users
+* (Super Stretch goal) Event calendar
