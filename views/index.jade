@@ -21,9 +21,9 @@ html(lang='en')
               img(src='/img/2f1b3016a2166ee3fc7f40e802c71039-pin.png', alt='Geotag Logo')
             h2 Event Listener,
             h3 Providing events near you.
-            form.login
-              input(type='text', placeholder='email')
-              input(type='password', placeholder='Password')
+            form.login(action='/' method='POST')
+              input(name='username' type='text', placeholder='Username')
+              input(name='password' type='password', placeholder='Password')
               input.btn.btn-success.btn-xs(type='submit', value='Sign In')
               input.btn.btn-success.btn-xs(type='submit', value='Create account')
               br
