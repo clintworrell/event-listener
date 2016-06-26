@@ -28,13 +28,13 @@ block content
     form.form-event-search(action="/events/search", method="post")
       div
         label Keyword
-        input(type="text",  name="keyword", placeholder="music, software, ...")
+        input(type="text",  name="keyword", placeholder="software, music, ...", value="hackathon")
       div
         label Location
-        input(type="text",  name="location", placeholder="san francisco, ...")
+        input(type="text",  name="location", placeholder="san francisco, ...", value="san francisco")
       div
         label Search radius
-        input(type="text",  name="radius", placeholder="10mi, ...")
+        input(type="text",  name="radius", placeholder="10mi, ...", value="10mi")
       div
         button(type="submit") Find Events
 
