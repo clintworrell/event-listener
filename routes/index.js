@@ -16,8 +16,11 @@ router.post('/', function(req, res, next) {
   .then(function(user) {
     if (user) {
       if (bcrypt.compareSync(req.body.password, user.password)) {
-        req.session.user = user;
-        res.redirect('/users/' + req.session.id)
+        req.session.user = {
+          id: user.id,
+          username: user.username
+        }
+        res.redirect('/users/' + req.session.user.id);
       } else {
         res.send("wrong password");
       }
