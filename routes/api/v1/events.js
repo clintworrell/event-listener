@@ -5,8 +5,8 @@ var knex = require('../../../db/knex');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   knex('events')
-  .then(function(data) {
-    res.json(data);
+  .then(function(events) {
+    res.json(events);
   });
 });
 
@@ -21,8 +21,8 @@ router.post('/', function(req, res, next) {
     venue: req.body.venue
   })
   .returning('*')
-  .then(function(data) {
-    res.json(data);
+  .then(function(addedEvent) {
+    res.json(addedEvent);
   });
 });
 
@@ -31,8 +31,8 @@ router.delete('/:id', function(req, res, next) {
   .where('events.id', req.params.id)
   .del()
   .returning('*')
-  .then(function(data) {
-    res.json(data);
+  .then(function(deletedEvent) {
+    res.json(deletedEvent);
   });
 });
 
