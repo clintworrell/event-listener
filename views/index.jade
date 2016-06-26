@@ -1,5 +1,37 @@
-extends layout
-
-block content
-  h1= title
-  p Welcome to #{title}
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', rel='stylesheet')
+    link(rel='stylesheet', href='index.css')
+    .container
+      .row
+        .col-md-12
+          .pr-wrap
+            .pass-reset
+              label
+                | Enter the email you signed up with
+              input(type='email', placeholder='Email')
+              input.pass-reset-submit.btn.btn-success.btn-sm(type='submit', value='Submit')
+          .wrap
+            a#logo(href='/', title='Logo')
+              img(src='2f1b3016a2166ee3fc7f40e802c71039-pin.png', alt='Geotag Logo')
+            p.form-title Event Listener,
+            h3 Providing events near you.
+            form.login
+              input(type='text', placeholder='email')
+              input(type='password', placeholder='Password')
+              input.btn.btn-success.btn-xs(type='submit', value='Sign In')
+              input.btn.btn-success.btn-xs(type='submit', value='Create account')
+              br
+              br
+              br
+              button.btn.btn-danger.btn-xs(type='button') Sign Up with Google
+              .remember-forgot
+                .row
+                  .col-md-6
+                    .checkbox
+                  .col-md-6.forgot-pass-content
+                    a.forgot-pass(href='javascript:void(0)') Forgot Password?
