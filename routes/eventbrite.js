@@ -5,8 +5,7 @@ var Events = require('./models/events');
 var keyword = 'hackathon';
 var location = 'san francisco';
 var radius = '10mi';
-var token = 'A74LOHAEAJPPXY2S4MJK';
-// var token = process.env.EVENTBRITE_ANON_OAUTH_TOKEN;
+var token = process.env.EVENTBRITE_ANON_OAUTH_TOKEN;
 
 searchEventBriteEvents();
 
