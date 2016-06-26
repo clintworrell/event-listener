@@ -26,6 +26,7 @@ router.post('/', function(req, res, next) {
   if (req.body.password === req.body.verifypassword) {
     knex('users')
     .where('username', req.body.username)
+    .orWhere('email', req.body.email)
     .then(function(users) {
       if (users.length > 0) {
         res.locals.error = "That username has already been taken!";
