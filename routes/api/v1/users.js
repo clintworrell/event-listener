@@ -1,6 +1,9 @@
-var express = require('express');
-var router = express.Router();
-var knex = require('../../../db/knex');
+"use strict";
+
+let express = require('express'),
+    router = express.Router(),
+    knex = require('../../../db/knex'),
+    bcrypt = require('bcrypt');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -11,8 +14,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:id/events', function(req, res, next) {
-  knex('users')
-  .where('users.id', req.params.id)
+  knex('events')
+  .join('users_events', 'events.id', 'users_events.event_id')
+  .where('users_events.user_id', req.params.id)
   .then(function(events) {
     res.json(events);
   });

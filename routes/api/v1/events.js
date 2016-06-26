@@ -1,6 +1,8 @@
-var express = require('express');
-var router = express.Router();
-var knex = require('../../../db/knex');
+"use strict";
+
+let express = require('express'),
+    router = express.Router(),
+    knex = require('../../../db/knex');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
