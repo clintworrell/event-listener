@@ -5,7 +5,6 @@ let express = require('express'),
     knex = require('../../../db/knex'),
     bcrypt = require('bcrypt');
 
-/* GET users listing. */
 router.get('/', function(req, res, next) {
   knex('users')
   .then(function(users) {
@@ -30,7 +29,7 @@ router.post('/', function(req, res, next) {
     .then(function(users) {
       if (users.length > 0) {
         res.locals.error = "That username has already been taken!";
-        res.redirect('/');
+        res.redirect('/users');
       } else {
         let hashedPassword = bcrypt.hashSync(req.body.password, 10);
         knex('users')
