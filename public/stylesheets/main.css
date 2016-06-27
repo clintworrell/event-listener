@@ -1,5 +1,6 @@
 body {
   background: #2C4251;
+  color: #fff;
 }
 
 ul {
@@ -23,11 +24,22 @@ li a {
 }
 
 li a:hover:not(.active) {
-  background-color: #D16666;
+  background-color: #DDA4A4;
+  color: #fff;
+  text-decoration: none;
 }
 
 .active {
   background-color: #D16666;
+}
+
+a.active {
+  color: #fff;
+  text-decoration: none;
+}
+
+h1 {
+  margin: 20px;
 }
 
 table {

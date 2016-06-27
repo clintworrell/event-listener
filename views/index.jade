@@ -24,6 +24,8 @@ html(lang='en')
             form.login(action='/' method='POST')
               input(name='username' type='text', placeholder='Username')
               input(name='password' type='password', placeholder='Password')
+              if (loginError)
+                p.warning= loginError
               input.btn.btn-success.btn-xs(type='submit', value='Sign In')
               input.btn.btn-success.btn-xs(type='submit', value='Create account')
               br

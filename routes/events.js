@@ -13,7 +13,8 @@ router.get('/', function(req, res, next) {
   .then(function(events) {
     res.render('events', {
       title: "Events",
-      events: events
+      events: events,
+      username: req.session.user.username
     });
   });
 });
