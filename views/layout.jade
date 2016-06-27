@@ -1,11 +1,23 @@
 doctype html
-html
+html(lang='en')
   head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
     link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', rel='stylesheet')
+    link(rel='stylesheet', href='/stylesheets/mainpage.css')
   body
+    ul
+      li
+        a(class=(title === 'Main' ? 'active' : '') href='/') Home
+      li
+        a(class=(title === 'Events' ? 'active' : '') href='/events') Events
+      li
+        a(href='/') Categories
+      li
+        a(href='/') About
+      li(style='float:right')
+        a(href='/logout') Log Out
+      li(style='float:right')
+        a(href='/')= username
     block content
-    
-    
-    
