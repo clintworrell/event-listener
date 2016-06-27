@@ -11,11 +11,11 @@ let express = require('express'),
 
     routes = require('./routes/index'),
     users = require('./routes/users'),
+    events = require('./routes/events');
     usersApi = require('./routes/api/v1/users'),
     eventsApi = require('./routes/api/v1/events');
 
 require('dotenv').load();
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -39,6 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/events', events);
 app.use('/api/v1/users', usersApi);
 app.use('/api/v1/events', eventsApi);
 
