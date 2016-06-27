@@ -12,6 +12,14 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/:id', function(req, res, next) {
+  knex('users')
+  .where('id', req.params.id)
+  .then(function(user) {
+    res.json(user);
+  })
+});
+
 router.get('/:id/events', function(req, res, next) {
   knex('events')
   .join('users_events', 'events.id', 'users_events.event_id')

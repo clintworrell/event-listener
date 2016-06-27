@@ -1,0 +1,43 @@
+extends layout
+
+block content
+  div
+    h3 Events
+    table.table
+      tr
+        th ID
+        th Name
+        th Start time
+        th End time
+        th Group name
+        th Venue
+        th Url
+      each event in events
+        tr
+          td
+            a(href='/event/#{event.id}')= event.id
+          td= event.name
+          td= event.start_time
+          td= event.end_time
+          td= event.group_name
+          td= event.venue
+          td
+            a(href='#{event.url}')= event.url
+  <br>
+  div
+    form.form-event-search(action="/events/search", method="post")
+      div
+        label Keyword
+        input(type="text",  name="keyword", placeholder="software, music, ...", value="hackathon")
+      div
+        label Location
+        input(type="text",  name="location", placeholder="san francisco, ...", value="san francisco")
+      div
+        label Search radius
+        input(type="text",  name="radius", placeholder="10mi, ...", value="10mi")
+      div
+        button(type="submit") Find Events
+
+    
+    
+    
