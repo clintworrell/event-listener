@@ -1,6 +1,7 @@
 body {
-  background: #2C4251;
-  color: #fff;
+  background: #f8f8fa;
+  color: #000;
+  font-family: 'Roboto', sans-serif;
 }
 
 ul {
@@ -43,8 +44,8 @@ h1 {
 }
 
 table {
-  border: 1px solid #fff;
-  color: #fff;
+  border: 1px solid #000;
+  color: #000;
   margin-top: 25px;
 }
 
@@ -61,7 +62,7 @@ tr:last-child td {
 }
 
 .event-row {
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #000;
 }
 
 .event-name {
