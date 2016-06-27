@@ -29,3 +29,29 @@ li a:hover:not(.active) {
 .active {
   background-color: #D16666;
 }
+
+table {
+  border: 1px solid #fff;
+  color: #fff;
+  margin-top: 25px;
+}
+
+td {
+  padding-left: 25px;
+}
+
+tr:first-child td {
+  padding-top: 25px;
+}
+
+tr:last-child td {
+  padding: 25px;
+}
+
+.event-row {
+  border-bottom: 1px solid #fff;
+}
+
+.event-name {
+  font-size: 20px;
+}

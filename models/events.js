@@ -1,6 +1,6 @@
 var knex = require('../db/knex');
 
-function eventBriteEvent(config) {
+function EventBriteEvent(config) {
   if(!config) {
     config = {};
   }
@@ -9,8 +9,10 @@ function eventBriteEvent(config) {
   this.url = config.url;
   this.start_time = config.start.local; // utc is available also.
   this.end_time = config.end.local;
-  this.group_name = config.organizer_id;
-  this.venue = config.venue_id;
+  this.organizer_id = config.organizer_id;
+  this.organizer_name = null;
+  this.venue_id = config.venue_id;
+  this.venue_name = null;
   this.description = config.description.text || null;
   this.capacity = config.capacity;
   this.category = config.category_id;
@@ -19,7 +21,7 @@ function eventBriteEvent(config) {
   this.status = config.status;
 };
 
-function meetupEvent(config) {
+function MeetupEvent(config) {
   if(!config) {
     config = {};
   }
@@ -28,8 +30,8 @@ function meetupEvent(config) {
   this.url = config.event_url;
   this.start_time = new Date(config.time);
   this.end_time = !config.duration ? 'none provided' : new Date(config.time + config.duration);
-  this.group_name = config.group.name;
-  this.venue = config.venue.name;
+  this.organizer_name = config.group.name;
+  this.venue_name = config.venue.name;
   this.description = config.description;
   this.capacity = config.rsvp_limit;
   this.category = config.group.category || null;
@@ -56,6 +58,6 @@ function meetupEvent(config) {
 // }
 
 module.exports = {
-  eventBriteEvent: eventBriteEvent,
-  meetupEvent: meetupEvent
+  EventBriteEvent: EventBriteEvent,
+  MeetupEvent: MeetupEvent
 };

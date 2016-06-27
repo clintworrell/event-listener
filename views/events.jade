@@ -3,28 +3,6 @@ extends layout
 block content
   div.container
     div.row
-      h3 Events
-      table.table.table-striped.table-bordered
-        tr
-          th ID
-          th Name
-          th Start time
-          th End time
-          th Group name
-          th Venue
-          th Url
-        each event in events
-          tr
-            td
-              a(href='/event/#{event.id}')= event.id
-            td= event.name
-            td= event.start_time
-            td= event.end_time
-            td= event.group_name
-            td= event.venue
-            td
-              a(href='#{event.url}')= event.url
-    div.row
       div.col-md-4
         form.form-horizontal(action="/events/search", method="post")
           div.form-group
@@ -39,3 +17,17 @@ block content
           div.form-group
             button.btn.btn-large.btn-success(type="submit") Find Events
       div.col-md-8
+        table
+          each event in events
+            tbody.event-row
+              tr
+                td(rowspan='4', valign='top')= event.start_time
+                td= event.organizer_id
+              tr
+                td
+                  strong(class="event-name")= event.name
+              tr
+                td= event.venue_id
+              tr
+                td
+                  | Amount of people going
