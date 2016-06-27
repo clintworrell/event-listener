@@ -1,41 +1,42 @@
 extends layout
- 
+
 block content
-  div.container
-    div.row
-      h3 Events
-      table.table.table-striped.table-bordered
+  div
+    h3 Events
+    table.table
+      tr
+        th ID
+        th Name
+        th Start time
+        th End time
+        th Group name
+        th Venue
+        th Url
+      each event in events
         tr
-          th ID
-          th Name
-          th Start time
-          th End time
-          th Group name
-          th Venue
-          th Url
-        each event in events
-          tr
-            td
-              a(href='/event/#{event.id}')= event.id
-            td= event.name
-            td= event.start_time
-            td= event.end_time
-            td= event.group_name
-            td= event.venue
-            td
-              a(href='#{event.url}')= event.url
-    div.row
-      div.col-md-4
-        form.form-horizontal(action="/events/search", method="post")
-          div.form-group
-            label Keyword
-            input.form-control(type="text",  name="keyword", placeholder="software, music, ...", value="hackathon")
-          div.form-group
-            label Location
-            input.form-control(type="text",  name="location", placeholder="san francisco, ...", value="san francisco")
-          div.form-group
-            label Search radius
-            input.form-control(type="text",  name="radius", placeholder="10mi, ...", value="10mi")
-          div.form-group
-            button.btn.btn-large.btn-success(type="submit") Find Events
-      div.col-md-8
+          td
+            a(href='/event/#{event.id}')= event.id
+          td= event.name
+          td= event.start_time
+          td= event.end_time
+          td= event.group_name
+          td= event.venue
+          td
+            a(href='#{event.url}')= event.url
+  div
+    form.form-event-search(action="/events/search", method="post")
+      div
+        label Keyword
+        input(type="text",  name="keyword", placeholder="software, music, ...", value="hackathon")
+      div
+        label Location
+        input(type="text",  name="location", placeholder="san francisco, ...", value="san francisco")
+      div
+        label Search radius
+        input(type="text",  name="radius", placeholder="10mi, ...", value="10mi")
+      div
+        button(type="submit") Find Events
+
+    
+    
+    
