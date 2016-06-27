@@ -26,9 +26,10 @@ block content
                 td= event.group_name
               tr
                 td
-                  strong(class="event-name")= event.name
+                  a(href=event.url)
+                    strong(class="event-name")= event.name
               tr
                 td= event.venue_id
               tr
                 td
-                  | Amount of people going
+                  | # of RSVPs
