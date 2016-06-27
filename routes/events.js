@@ -9,7 +9,10 @@ let express = require('express'),
 router.get('/', function(req, res, next) {
   knex('events')
   .then(function(events) {
-    res.render('event', {events: events});
+    res.render('events', {
+      title: "Events",
+      events: events
+    });
   });
 });
 

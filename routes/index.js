@@ -6,7 +6,16 @@ let express = require('express'),
     bcrypt = require('bcrypt');
 
 router.get('/', function(req, res, next) {
-  res.render('index');
+  if (req.session.user) {
+    res.redirect('/users/' + req.session.user.id);
+  } else {
+    res.render('index');
+  }
+});
+
+router.get('/logout', function(req, res, next) {
+  req.session = null;
+  res.redirect('/');
 });
 
 router.post('/', function(req, res, next) {
