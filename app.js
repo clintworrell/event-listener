@@ -11,7 +11,7 @@ let express = require('express'),
 
     routes = require('./routes/index'),
     users = require('./routes/users'),
-    events = require('./routes/events');
+    events = require('./routes/events'),
     usersApi = require('./routes/api/v1/users'),
     eventsApi = require('./routes/api/v1/events');
 

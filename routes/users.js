@@ -14,7 +14,8 @@ router.get('/:userId', function(req, res, next) {
     knex('users')
     .where('id', req.params.userId)
     .then(function(user) {
-      res.render('mainpage', {
+      res.render('main', {
+        title: "Main",
         username: req.session.user.username
       });
     })
