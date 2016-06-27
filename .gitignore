@@ -28,11 +28,10 @@ node_modules
 
 # Debug log from npm
 npm-debug.log
-.env
 
-# Document
-ApiInfo.md
-notes.md
+# Config file
+.env
+Procfile
 
 # Unused files
 unused

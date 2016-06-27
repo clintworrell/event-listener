@@ -1,6 +1,5 @@
 "use strict"
 var request = require('request');
-// var Events = require('../models/events');
 
 function searchEventBriteEvents(keyword, location, radius) {
   let url = `https://www.eventbriteapi.com/v3/events/search/?q=${keyword}&location.address=${location}&location.within=${radius}&token=${process.env.EVENTBRITE_ANON_OAUTH_TOKEN}`;
