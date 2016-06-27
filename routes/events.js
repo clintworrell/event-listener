@@ -3,8 +3,10 @@
 let express = require('express'),
     router = express.Router(),
     knex = require('../db/knex'),
-    searchEventBriteEvents = require('./eventbrite'),
-    Events = require('../models/events');
+    searchEventBriteEvents = require('./eventbrite').searchEventBriteEvents,
+    searchMeetupEvents = require('./eventbrite').searchMeetupEvents,
+    Events = require('../models/events').eventBriteEvent,
+    meetupEvent = require('../models/events').meetupEvent;
 
 router.get('/', function(req, res, next) {
   knex('events')
@@ -31,6 +33,16 @@ router.get('/', function(req, res, next) {
 //     res.json(addedEvent);
 //   });
 // });
+
+router.get('/searchmeetup', function(req, res, next) {
+  searchMeetupEvents('Python', 'San Francisco', 5)
+  .then(function(searchResponse) {
+    let jsonBody = JSON.parse(searchResponse.body).results;
+    let testEvent = new meetupEvent(jsonBody[15]);
+    console.log(testEvent);
+    res.json(jsonBody[15]);
+  });
+});
 
 router.post('/search', function(req, res, next) {
   let keyword = req.body.keyword;

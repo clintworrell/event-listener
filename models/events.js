@@ -1,8 +1,8 @@
 var knex = require('../db/knex');
 
-function Events(config) {
+function eventBriteEvent(config) {
   if(!config) {
-    config = {}
+    config = {};
   }
 
   this.name = config.name.text;
@@ -15,6 +15,25 @@ function Events(config) {
   this.capacity = config.capacity;
   this.category = config.category_id;
   this.created = config.created;
+  this.id = config.id;
+  this.status = config.status;
+};
+
+function meetupEvent(config) {
+  if(!config) {
+    config = {};
+  }
+
+  this.name = config.name;
+  this.url = config.event_url;
+  this.start_time = new Date(config.time);
+  this.end_time = !config.duration ? 'none provided' : new Date(config.time + config.duration);
+  this.group_name = config.group.name;
+  this.venue = config.venue.name;
+  this.description = config.description;
+  this.capacity = config.rsvp_limit;
+  this.category = config.group.category || null;
+  this.created = new Date(config.created);
   this.id = config.id;
   this.status = config.status;
 }
@@ -36,4 +55,7 @@ function Events(config) {
 //   })
 // }
 
-module.exports = Events;
+module.exports = {
+  eventBriteEvent: eventBriteEvent,
+  meetupEvent: meetupEvent
+};
