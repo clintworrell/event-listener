@@ -64,18 +64,18 @@ router.post('/search', function(req, res, next) {
       return new EventBriteEvent(event);
     });
     let eventsPromises = [];
-    meetupEvents.forEach(function(event) {
-      let query = knex('events')
-      .insert({
-        name: event.name,
-        url: event.url,
-        start_time: event.start_time,
-        end_time: event.end_time,
-        group_name: event.group_name,
-        venue: event.venue
-      }).returning('*')
-      eventsPromises.push(query);
-    });
+    // meetupEvents.forEach(function(event) {
+    //   let query = knex('events')
+    //   .insert({
+    //     name: event.name,
+    //     url: event.url,
+    //     start_time: event.start_time,
+    //     end_time: event.end_time,
+    //     group_name: event.group_name,
+    //     venue: event.venue
+    //   }).returning('*')
+    //   eventsPromises.push(query);
+    // });
     eventBriteEvents.forEach(function(event) {
       let query = knex('events')
       .insert({
