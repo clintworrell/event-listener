@@ -64,18 +64,18 @@ router.post('/search', function(req, res, next) {
       return new EventBriteEvent(event);
     });
     let eventsPromises = [];
-    // meetupEvents.forEach(function(event) {
-    //   let query = knex('events')
-    //   .insert({
-    //     name: event.name,
-    //     url: event.url,
-    //     start_time: event.start_time,
-    //     end_time: event.end_time,
-    //     group_name: event.group_name,
-    //     venue: event.venue
-    //   }).returning('*')
-    //   eventsPromises.push(query);
-    // });
+    meetupEvents.forEach(function(event) {
+      let query = knex('events')
+      .insert({
+        name: event.name,
+        url: event.url,
+        start_time: event.start_time,
+        end_time: event.end_time,
+        group_name: event.organizer_name,
+        venue: event.venue_name
+      }).returning('*')
+      eventsPromises.push(query);
+    });
     eventBriteEvents.forEach(function(event) {
       let query = knex('events')
       .insert({
@@ -83,8 +83,8 @@ router.post('/search', function(req, res, next) {
         url: event.url,
         start_time: event.start_time,
         end_time: event.end_time,
-        group_name: event.group_name,
-        venue: event.venue
+        group_name: event.organizer_id,
+        venue: event.venue_id
       }).returning('*')
       eventsPromises.push(query);
     });
