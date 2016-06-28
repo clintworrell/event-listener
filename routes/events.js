@@ -9,14 +9,23 @@ let express = require('express'),
     MeetupEvent = require('../models/events').MeetupEvent;
 
 router.get('/', function(req, res, next) {
-  let currentPage = parseInt(req.query.page || 1);
+  let currentPage = 1;
+  if (req.query.page) {
+    if (req.query.page > 1) {
+      currentPage = req.query.page;
+    } else {
+      res.redirect('/events');
+    }
+  } else {
+    currentPage = 1;
+  }
   knex('events').limit(5).offset((currentPage-1) * 5)
   .then(function(events) {
     res.render('events', {
       title: "Events",
       events: events,
       username: req.session.user.username,
-      currentPage: currentPage
+      currentPage: parseInt(currentPage)
     });
   });
 });
