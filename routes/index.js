@@ -31,10 +31,10 @@ router.post('/', function(req, res, next) {
         }
         res.redirect('/users/' + req.session.user.id);
       } else {
-        res.send("wrong password");
+        res.render('index', {loginError: "Wrong password!"});
       }
     } else {
-      res.send("no user found");
+      res.render('index', {loginError: "Username not found!"});
     }
   });
 });

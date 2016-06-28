@@ -6,6 +6,7 @@ html(lang='en')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', rel='stylesheet')
     link(rel='stylesheet', href='/stylesheets/main.css')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto')
   body
     ul
       li
@@ -13,9 +14,7 @@ html(lang='en')
       li
         a(class=(title === 'Events' ? 'active' : '') href='/events') Events
       li
-        a(href='/') Categories
-      li
-        a(href='/') About
+        a(class=(title === 'Messages' ? 'active' : '') href='/messages') Messages
       li(style='float:right')
         a(href='/logout') Log Out
       li(style='float:right')

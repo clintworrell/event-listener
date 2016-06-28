@@ -3,17 +3,29 @@
 let express = require('express'),
     router = express.Router(),
     knex = require('../db/knex'),
-    searchEventBriteEvents = require('./eventbrite').searchEventBriteEvents,
-    searchMeetupEvents = require('./eventbrite').searchMeetupEvents,
+    searchEventBriteEvents = require('./searchevents').searchEventBriteEvents,
+    searchMeetupEvents = require('./searchevents').searchMeetupEvents,
     EventBriteEvent = require('../models/events').EventBriteEvent,
     MeetupEvent = require('../models/events').MeetupEvent;
 
 router.get('/', function(req, res, next) {
-  knex('events')
+  let currentPage = 1;
+  if (req.query.page) {
+    if (req.query.page > 1) {
+      currentPage = req.query.page;
+    } else {
+      res.redirect('/events');
+    }
+  } else {
+    currentPage = 1;
+  }
+  knex('events').limit(5).offset((currentPage-1) * 5)
   .then(function(events) {
     res.render('events', {
       title: "Events",
-      events: events
+      events: events,
+      username: req.session.user.username,
+      currentPage: parseInt(currentPage)
     });
   });
 });
@@ -34,28 +46,37 @@ router.get('/', function(req, res, next) {
 //   });
 // });
 
-router.get('/searchmeetup', function(req, res, next) {
-  searchMeetupEvents('Python', 'San Francisco', 5)
-  .then(function(searchResponse) {
-    let jsonBody = JSON.parse(searchResponse.body).results;
-    let testEvent = new MeetupEvent(jsonBody[0]);
-    console.log(testEvent);
-    res.json(jsonBody[0]);
-  });
-});
-
 router.post('/search', function(req, res, next) {
   let keyword = req.body.keyword;
   let location = req.body.location;
-  let radius = req.body.radius || '5mi';
-  let events = searchEventBriteEvents(keyword, location, radius);
-  events.then(function(searchResponse){
-    let jsonBody = JSON.parse(searchResponse.body);
-    let events = jsonBody.events.map(function(event) {
+  let meetupRadius = parseInt(req.body.radius, 10) || 5;
+  let eventBriteRadius = parseInt(req.body.radius, 10) + "mi" || "5mi";
+  let meetupEvents = searchMeetupEvents(keyword, location, meetupRadius);
+  let eventBriteEvents = searchEventBriteEvents(keyword, location, eventBriteRadius);
+  let allEvents = Promise.all([meetupEvents, eventBriteEvents]);
+  allEvents.then(function(searchResponse) {
+    let meetupEvents = JSON.parse(searchResponse[0].body).results;
+    let eventBriteEvents = JSON.parse(searchResponse[1].body).events;
+    meetupEvents = meetupEvents.map(function(event) {
+      return new MeetupEvent(event);
+    });
+    eventBriteEvents = eventBriteEvents.map(function(event) {
       return new EventBriteEvent(event);
     });
-    let promises = [];
-    events.forEach(function(event) {
+    let eventsPromises = [];
+    // meetupEvents.forEach(function(event) {
+    //   let query = knex('events')
+    //   .insert({
+    //     name: event.name,
+    //     url: event.url,
+    //     start_time: event.start_time,
+    //     end_time: event.end_time,
+    //     group_name: event.group_name,
+    //     venue: event.venue
+    //   }).returning('*')
+    //   eventsPromises.push(query);
+    // });
+    eventBriteEvents.forEach(function(event) {
       let query = knex('events')
       .insert({
         name: event.name,
@@ -65,9 +86,9 @@ router.post('/search', function(req, res, next) {
         group_name: event.group_name,
         venue: event.venue
       }).returning('*')
-      promises.push(query);
+      eventsPromises.push(query);
     });
-    return Promise.all(promises);
+    return Promise.all(eventsPromises);
   })
   .then(function(data) {
     res.redirect('/events');
