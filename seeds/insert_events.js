@@ -8,8 +8,8 @@ exports.seed = function(knex, Promise) {
         knex('events').insert({
           name: 'Shape: An AT&T Tech Expo',
           url: 'https://shape.att.com/',
-          start_time: 'July 15 03:00 2016 PST',
-          end_time: 'July 16 07:30 2016 PST',
+          start_time: 'June 29 03:00 2016 PST',
+          end_time: 'June 29 07:30 2016 PST',
           group_name: 'AT&T',
           venue: 'AT&T Park'}),
         knex('events').insert({
