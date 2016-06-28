@@ -9,6 +9,8 @@ let express = require('express'),
     cookieSession = require("cookie-session"),
     bodyParser = require('body-parser'),
 
+    geoip = require('./routes/geoip'),
+
     routes = require('./routes/index'),
     users = require('./routes/users'),
     events = require('./routes/events'),
@@ -37,6 +39,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/geoip', geoip);
 app.use('/', routes);
 app.use('/users', users);
 app.use('/events', events);
