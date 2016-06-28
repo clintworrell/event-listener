@@ -18,18 +18,25 @@ block content
           div.form-group
             button.btn.btn-large.btn-success(type="submit") Find Events
       div.col-md-8
+        a(href="/events?page=" + (currentPage - 1) class=(currentPage === 1 ? 'disabled' : '')) previous 
+        a(href="/events?page=" + (currentPage + 1)) next
         table
           each event in events
             tbody.event-row
               tr
-                td(rowspan='4', valign='top')= event.start_time
+                td= event.start_time
                 td= event.organizer_name
               tr
+                td= event.end_time
                 td
                   a(href=event.url)
-                    strong(class="event-name")= event.name
+                    strong.event-name= event.name
               tr
+                td
                 td= event.venue_name
               tr
+                td(style="text-align: center;")
+                  button(data-event=event class="btn btn-primary add-event-btn" type="button")
+                    span(class="glyphicon glyphicon-plus" aria-hidden="true")
                 td
                   | # of RSVPs

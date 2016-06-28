@@ -30,6 +30,38 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.post('/', function(req, res, next) {
+  knex('events')
+  .insert({
+    name: req.body.name,
+    url: req.body.url,
+    start_time: req.body.start_time,
+    end_time: req.body.end_time,
+    organizer_name: req.body.organizer_name,
+    venue_name: req.body.venue_name
+  })
+  .returning('*')
+  .then(function(addedEvent) {
+    res.json(addedEvent);
+  });
+});
+
+router.post('/', function(req, res, next) {
+  knex('events')
+  .insert({
+    name: req.body.name,
+    url: req.body.url,
+    start_time: req.body.start_time,
+    end_time: req.body.end_time,
+    group_name: req.body.group_name,
+    venue: req.body.venue
+  })
+  .returning('*')
+  .then(function(addedEvent) {
+    res.json(addedEvent);
+  });
+});
+
 // router.post('/', function(req, res, next) {
 //   knex('events')
 //   .insert({
@@ -75,6 +107,7 @@ router.post('/search', function(req, res, next) {
   })
   .catch(function(error) {
     console.log(error);
+    res.send("Error");
   });
 });
 
