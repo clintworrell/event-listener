@@ -15,13 +15,22 @@ let express = require('express'),
     users = require('./routes/users'),
     events = require('./routes/events'),
     usersApi = require('./routes/api/v1/users'),
-    eventsApi = require('./routes/api/v1/events');
+    eventsApi = require('./routes/api/v1/events'),
+
+    passport = require('passport'),
+    GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
+    authRoute = require('./routes/auth');
+
+
 
 require('dotenv').load();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(cookieSession({
   keys: [
@@ -33,6 +42,8 @@ app.use(cookieSession({
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -45,6 +56,9 @@ app.use('/users', users);
 app.use('/events', events);
 app.use('/api/v1/users', usersApi);
 app.use('/api/v1/events', eventsApi);
+app.use('/auth', authRoute);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
