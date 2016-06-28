@@ -1,6 +1,7 @@
 extends layout
  
 block content
+  h1 Events
   div.container
     div.row
       div.col-md-4
@@ -17,17 +18,20 @@ block content
           div.form-group
             button.btn.btn-large.btn-success(type="submit") Find Events
       div.col-md-8
+        a(href="/events?page=" + (currentPage - 1) class=(currentPage === 1 ? 'disabled' : '')) previous 
+        a(href="/events?page=" + (currentPage + 1)) next
         table
           each event in events
             tbody.event-row
               tr
                 td(rowspan='4', valign='top')= event.start_time
-                td= event.organizer_id
+                td= event.group_name
               tr
                 td
-                  strong(class="event-name")= event.name
+                  a(href=event.url)
+                    strong(class="event-name")= event.name
               tr
                 td= event.venue_id
               tr
                 td
-                  | Amount of people going
+                  | # of RSVPs

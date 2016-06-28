@@ -36,4 +36,4 @@ Procfile
 # Unused files
 unused
 
-.DS_STORE
+.DS_Store

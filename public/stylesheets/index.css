@@ -190,3 +190,9 @@ form.login a:hover {
   padding: 10px;
   left: 45%;
 }
+
+.warning {
+  color: #fb2929;
+  font-size: 18px;
+  font-weight: bold;
+}
