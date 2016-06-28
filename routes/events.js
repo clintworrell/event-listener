@@ -30,6 +30,38 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.post('/', function(req, res, next) {
+  knex('events')
+  .insert({
+    name: req.body.name,
+    url: req.body.url,
+    start_time: req.body.start_time,
+    end_time: req.body.end_time,
+    organizer_name: req.body.organizer_name,
+    venue_name: req.body.venue_name
+  })
+  .returning('*')
+  .then(function(addedEvent) {
+    res.json(addedEvent);
+  });
+});
+
+router.post('/', function(req, res, next) {
+  knex('events')
+  .insert({
+    name: req.body.name,
+    url: req.body.url,
+    start_time: req.body.start_time,
+    end_time: req.body.end_time,
+    group_name: req.body.group_name,
+    venue: req.body.venue
+  })
+  .returning('*')
+  .then(function(addedEvent) {
+    res.json(addedEvent);
+  });
+});
+
 // router.post('/', function(req, res, next) {
 //   knex('events')
 //   .insert({
@@ -53,48 +85,29 @@ router.post('/search', function(req, res, next) {
   let eventBriteRadius = parseInt(req.body.radius, 10) + "mi" || "5mi";
   let meetupEvents = searchMeetupEvents(keyword, location, meetupRadius);
   let eventBriteEvents = searchEventBriteEvents(keyword, location, eventBriteRadius);
-  let allEvents = Promise.all([meetupEvents, eventBriteEvents]);
-  allEvents.then(function(searchResponse) {
+  Promise.all([meetupEvents, eventBriteEvents])
+  .then(function(searchResponse) {
     let meetupEvents = JSON.parse(searchResponse[0].body).results;
     let eventBriteEvents = JSON.parse(searchResponse[1].body).events;
-    meetupEvents = meetupEvents.map(function(event) {
-      return new MeetupEvent(event);
-    });
-    eventBriteEvents = eventBriteEvents.map(function(event) {
-      return new EventBriteEvent(event);
-    });
     let eventsPromises = [];
     meetupEvents.forEach(function(event) {
-      let query = knex('events')
-      .insert({
-        name: event.name,
-        url: event.url,
-        start_time: event.start_time,
-        end_time: event.end_time,
-        group_name: event.organizer_name,
-        venue: event.venue_name
-      }).returning('*')
-      eventsPromises.push(query);
+      eventsPromises.push(new MeetupEvent(event));
     });
     eventBriteEvents.forEach(function(event) {
-      let query = knex('events')
-      .insert({
-        name: event.name,
-        url: event.url,
-        start_time: event.start_time,
-        end_time: event.end_time,
-        group_name: event.organizer_id,
-        venue: event.venue_id
-      }).returning('*')
-      eventsPromises.push(query);
+      eventsPromises.push(new EventBriteEvent(event));
     });
-    return Promise.all(eventsPromises);
-  })
-  .then(function(data) {
-    res.redirect('/events');
+    eventsPromises.sort(function(a, b) {
+      return new Date(a.start_time) - new Date(b.start_time);
+    });
+    res.render('events', {
+      title: "Events",
+      events: eventsPromises,
+      username: req.session.user.username
+    });
   })
   .catch(function(error) {
     console.log(error);
+    res.send("Error");
   });
 });
 

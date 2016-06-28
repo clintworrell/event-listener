@@ -6,8 +6,8 @@ exports.up = function(knex, Promise) {
     table.string('url');
     table.timestamp('start_time');
     table.timestamp('end_time');
-    table.string('group_name');
-    table.string('venue');
+    table.string('organizer_name');
+    table.string('venue_name');
   });
 };
 
