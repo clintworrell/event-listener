@@ -69,3 +69,7 @@ tr:last-child td {
 .event-name {
   font-size: 20px;
 }
+
+a.disabled {
+  pointer-events: none;
+}

@@ -18,6 +18,8 @@ block content
           div.form-group
             button.btn.btn-large.btn-success(type="submit") Find Events
       div.col-md-8
+        a(href="/events?page=" + (currentPage - 1) class=(currentPage === 1 ? 'disabled' : '')) previous 
+        a(href="/events?page=" + (currentPage + 1)) next
         table
           each event in events
             tbody.event-row

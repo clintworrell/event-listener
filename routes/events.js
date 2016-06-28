@@ -9,12 +9,14 @@ let express = require('express'),
     MeetupEvent = require('../models/events').MeetupEvent;
 
 router.get('/', function(req, res, next) {
-  knex('events')
+  let currentPage = parseInt(req.query.page || 1);
+  knex('events').limit(5).offset((currentPage-1) * 5)
   .then(function(events) {
     res.render('events', {
       title: "Events",
       events: events,
-      username: req.session.user.username
+      username: req.session.user.username,
+      currentPage: currentPage
     });
   });
 });
@@ -34,16 +36,6 @@ router.get('/', function(req, res, next) {
 //     res.json(addedEvent);
 //   });
 // });
-
-router.get('/searchmeetup', function(req, res, next) {
-  searchMeetupEvents('Python', 'San Francisco', 5)
-  .then(function(searchResponse) {
-    let jsonBody = JSON.parse(searchResponse.body).results;
-    let testEvent = new MeetupEvent(jsonBody[0]);
-    console.log(testEvent);
-    res.json(jsonBody[0]);
-  });
-});
 
 router.post('/search', function(req, res, next) {
   let keyword = req.body.keyword;
