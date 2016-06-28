@@ -10,22 +10,22 @@ exports.seed = function(knex, Promise) {
           url: 'https://shape.att.com/',
           start_time: 'July 15 03:00 2016 PST',
           end_time: 'July 16 07:30 2016 PST',
-          group_name: 'AT&T',
-          venue: 'AT&T Park'}),
+          organizer_name: 'AT&T',
+          venue_name: 'AT&T Park'}),
         knex('events').insert({
           name: 'Galvanize: How to Use Data to Optimize & Grow Your Business',
           url: 'https://www.eventbrite.com/e/galvanize-how-to-use-data-to-optimize-grow-your-business-tickets-26249454826',
           start_time: 'July 12 12:30 2016 PST',
           end_time: 'July 12 01:30 2016 PST',
-          group_name: 'Galvanize',
-          venue: 'Galvanize SF'}),
+          organizer_name: 'Galvanize',
+          venue_name: 'Galvanize SF'}),
         knex('events').insert({
           name: 'Multisensory Music Hackathon',
           url: 'http://monthlymusichackathon.org/',
           start_time: 'July 9 12:00 2016 EST',
           end_time: 'July 9 22:00 2016 EST',
-          group_name: 'Multisensory Music Hackathon',
-          venue: 'Spotify NY'})
+          organizer_name: 'Multisensory Music Hackathon',
+          venue_name: 'Spotify NY'})
       ]);
     });
 };
