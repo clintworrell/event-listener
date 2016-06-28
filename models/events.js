@@ -29,9 +29,9 @@ function MeetupEvent(config) {
   this.name = config.name;
   this.url = config.event_url;
   this.start_time = new Date(config.time);
-  this.end_time = !config.duration ? 'none provided' : new Date(config.time + config.duration);
-  this.organizer_name = config.group.name;
-  this.venue_name = config.venue.name;
+  this.end_time = !config.duration ? 'N/A' : new Date(config.time + config.duration);
+  this.organizer_name = config.group ? config.group.name : "N/A";
+  this.venue_name = config.venue ? config.venue.name : "N/A";
   this.description = config.description;
   this.capacity = config.rsvp_limit;
   this.category = config.group.category || null;
