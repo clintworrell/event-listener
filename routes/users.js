@@ -95,10 +95,10 @@ router.post('/:userId/messages', function(req, res, next) {
       })
       .returning('*')
       .then(function(message) {
-        res.json(message);
+        res.json("Message sent.");
       })
     } else {
-      res.json("No user found");
+      res.json("User not found.");
     }
   });
 });
