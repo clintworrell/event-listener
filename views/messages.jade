@@ -1,0 +1,42 @@
+extends layout
+
+
+
+block content
+  div.container
+    div.row
+      div.col-md-12#messages-container
+        h1 Messages
+        button.btn.btn-primary(type="button") Inbox
+        button.btn.btn-default(type="button") Compose
+        table
+          thead
+            tr
+              th
+              th From
+              th Subject
+              th Date
+          tbody
+            tr
+              td
+                input(type="checkbox")
+              td Clint Worrell
+              td
+                a Hey check this out!
+              td 12/29/16
+            tr
+              td
+                input(type="checkbox")
+              td Winnie Kwon
+              td
+                a You won't believe what I just found
+              td 5/25/13
+            tr
+              td
+                input(type="checkbox")
+              td Nica Lazatin
+              td
+                a YO YO YO!
+              td 5/25/13
+  //- each message in messages
+  //-   li= message.subject

@@ -1,0 +1,34 @@
+table {
+  border: 1px solid #dcdcdc;
+  color: #000;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+td {
+  padding: 0 25px;
+}
+
+tr:first-child td {
+  padding-top: 25px;
+}
+
+tr:last-child td {
+  padding: 25px;
+}
+
+.event-row {
+  border-bottom: 1px solid #dcdcdc;
+}
+
+.event-name {
+  font-size: 20px;
+}
+
+a.disabled {
+  pointer-events: none;
+}
+
+.add-event-btn {
+  display: none;
+}

@@ -25,6 +25,7 @@ router.get('/', function(req, res, next) {
       title: "Events",
       events: events,
       username: req.session.user.username,
+      id: req.session.user.id,
       currentPage: parseInt(currentPage)
     });
   });
@@ -32,33 +33,53 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
   knex('events')
-  .insert({
-    name: req.body.name,
-    url: req.body.url,
-    start_time: req.body.start_time,
-    end_time: req.body.end_time,
-    organizer_name: req.body.organizer_name,
-    venue_name: req.body.venue_name
-  })
-  .returning('*')
-  .then(function(addedEvent) {
-    res.json(addedEvent);
-  });
-});
-
-router.post('/', function(req, res, next) {
-  knex('events')
-  .insert({
-    name: req.body.name,
-    url: req.body.url,
-    start_time: req.body.start_time,
-    end_time: req.body.end_time,
-    group_name: req.body.group_name,
-    venue: req.body.venue
-  })
-  .returning('*')
-  .then(function(addedEvent) {
-    res.json(addedEvent);
+  .where('name', req.body.name)
+  .andWhere('organizer_name', req.body.organizer_name)
+  .first()
+  .then(function(existingEvent) {
+    if (existingEvent) {
+      knex('users_events')
+      .where('users_events.user_id', req.session.user.id)
+      .andWhere('users_events.event_id', existingEvent.id)
+      .first()
+      .then(function(existingUserEvent) {
+        if (existingUserEvent) {
+          res.json("This event is already on your list.")
+        } else {
+          knex('users_events')
+          .insert({
+            user_id: req.session.user.id,
+            event_id: existingEvent.id
+          })
+          .returning('*')
+          .then(function(newUserEvent) {
+            res.json("You added " + newUserEvent.name);
+          })
+        }
+      })
+    } else {
+      knex('events')
+      .insert({
+        name: req.body.name,
+        url: req.body.url,
+        start_time: req.body.start_time,
+        end_time: req.body.end_time,
+        organizer_name: req.body.organizer_name,
+        venue_name: req.body.venue_name
+      })
+      .returning('*')
+      .then(function(newEvent) {
+        knex('users_events')
+        .insert({
+          user_id: req.session.user.id,
+          event_id: newEvent.id
+        })
+        .returning('*')
+        .then(function(newUserEvent) {
+          res.json("You created a new event and added it to your list.")
+        })
+      });
+    }
   });
 });
 
@@ -102,7 +123,8 @@ router.post('/search', function(req, res, next) {
     res.render('events', {
       title: "Events",
       events: eventsPromises,
-      username: req.session.user.username
+      username: req.session.user.username,
+      id: req.session.user.id
     });
   })
   .catch(function(error) {
