@@ -31,7 +31,8 @@ html(lang='en')
               br
               br
               br
-              button.btn.btn-danger.btn-xs(type='button') Sign Up with Google
+            form(action='/auth/google' method='GET')
+              button.btn.btn-danger.btn-xs(type='submit') Sign Up with Google
               .remember-forgot
                 .row
                   .col-md-6
