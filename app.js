@@ -29,9 +29,6 @@ require('dotenv').load();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(passport.initialize());
-app.use(passport.session());
-
 app.use(cookieSession({
   keys: [
     process.env.SESSION_KEY1,
@@ -49,6 +46,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  done(null, id);
+});
 
 app.use('/geoip', geoip);
 app.use('/', routes);

@@ -5,11 +5,13 @@ let express = require('express'),
     knex = require('../db/knex'),
     bcrypt = require('bcrypt');
 
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+// router.get('/', function(req, res, next) {
+//   res.send('respond with a resource');
+// });
 
 router.get('/:userId', function(req, res, next) {
+  console.log("req.session.user");
+  console.log(req.session.user)
   if (req.session.user) {
     knex('users')
     .where('id', req.params.userId)
