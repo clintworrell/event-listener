@@ -1,0 +1,29 @@
+#messages-container {
+  text-align: center;
+}
+
+table {
+  margin: auto;
+}
+
+th, td {
+  font-size: 16px;
+  padding-top: 10px;
+  padding-left: 25px;
+}
+
+button {
+  margin: 0 10px;
+}
+
+.unread {
+  font-weight: bold;
+}
+
+#compose {
+  display: none;
+}
+
+#compose {
+  text-align: left;
+}

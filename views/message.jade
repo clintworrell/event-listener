@@ -1,0 +1,20 @@
+if message
+  table
+    tbody
+      tr
+        td
+          strong From: 
+          = message.username
+        td
+          strong Date: 
+          = message.date
+      tr
+        td(colspan="2")
+          strong Subject: 
+          = message.subject
+      tr
+        td(colspan="2")
+          strong Body: 
+          = message.body
+else
+  p No message found.

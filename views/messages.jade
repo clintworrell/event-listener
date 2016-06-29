@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  div.container
+    div.row
+      div.col-md-12#messages-container
+        h1 Messages
+        button.btn.btn-primary#inbox-btn(type="button") Inbox
+        button.btn.btn-default#compose-btn(type="button") Compose
+        if (title === "Messages")
+          include inbox
+        if (title === "Message")
+          include message

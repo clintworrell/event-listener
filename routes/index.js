@@ -6,8 +6,8 @@ let express = require('express'),
     bcrypt = require('bcrypt');
 
 router.get('/', function(req, res, next) {
-  if (req.session.user) {
-    res.redirect('/users/' + req.session.user.id);
+  if (req.session.id) {
+    res.redirect('/users/' + req.session.id);
   } else {
     res.render('index');
   }
@@ -25,11 +25,9 @@ router.post('/', function(req, res, next) {
   .then(function(user) {
     if (user) {
       if (bcrypt.compareSync(req.body.password, user.password)) {
-        req.session.user = {
-          id: user.id,
-          username: user.username
-        }
-        res.redirect('/users/' + req.session.user.id);
+        req.session.id = user.id;
+        req.session.username = user.username;
+        res.redirect('/users/' + req.session.id);
       } else {
         res.render('index', {loginError: "Wrong password!"});
       }

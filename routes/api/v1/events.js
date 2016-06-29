@@ -18,8 +18,8 @@ router.post('/', function(req, res, next) {
     url: req.body.url,
     start_time: req.body.start_time,
     end_time: req.body.end_time,
-    group_name: req.body.group_name,
-    venue: req.body.venue
+    organizer_name: req.body.organizer_name,
+    venue_name: req.body.venue_name
   })
   .returning('*')
   .then(function(addedEvent) {

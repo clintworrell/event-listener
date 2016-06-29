@@ -1,8 +1,8 @@
 extends layout
  
 block content
-  h1 Events
   div.container
+    h1= title === "Events" ? "Events" : "Saved Events"
     div.row
       div.col-md-4
         form.form-horizontal(action="/events/search", method="post")
@@ -24,14 +24,19 @@ block content
           each event in events
             tbody.event-row
               tr
-                td(rowspan='4', valign='top')= event.start_time
-                td= event.group_name
+                td= event.start_time
+                td= event.organizer_name
               tr
+                td= event.end_time
                 td
                   a(href=event.url)
-                    strong(class="event-name")= event.name
+                    strong.event-name= event.name
               tr
-                td= event.venue_id
+                td(rowspan='2' style="text-align: center;")
+                  if title === "Events"
+                    button(data-event=event class="btn btn-primary add-event-btn" type="button")
+                      span(class="glyphicon glyphicon-plus" aria-hidden="true")
+                td= event.venue_name
               tr
                 td
                   | # of RSVPs
