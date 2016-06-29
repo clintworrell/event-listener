@@ -46,7 +46,9 @@ $(function() {
         }, 300, "linear")
       }, 2000);
     } else {
-      $("#receiver-form").hide();
+      $("#receiver-form").animate({
+        left: -400
+      }, 300, "linear");
       $.ajax({
         url: '/users/' + $(this).data('id') + '/messages',
         method: 'POST',
