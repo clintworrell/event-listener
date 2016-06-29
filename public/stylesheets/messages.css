@@ -24,6 +24,6 @@ button {
   display: none;
 }
 
-#compose {
+#inbox, #compose {
   text-align: left;
 }

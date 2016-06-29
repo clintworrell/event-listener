@@ -8,6 +8,30 @@ $(function() {
     hide('#inbox');
   });
 
+  $("#compose-submit").on("click", function(e) {
+    let message = {
+      receiver: $("#receiver").val(),
+      subject: $("#subject").val(),
+      body: $("#body").val()
+    }
+    $.ajax({
+      url: '/users/' + $(this).data('id') + '/messages',
+      method: 'POST',
+      data: message,
+      success: (data) => {
+        $("#status").text(data);
+        $("#status").animate({
+          top: 0
+        }, 300, "linear")
+        setTimeout(function() {
+          $("#status").animate({
+            top: "-48px"
+          }, 300, "linear")
+        }, 2000);
+      }
+    })
+  });
+
   function select(element) {
     $(element).show();
     $(`${element}-btn`).removeClass('btn-default');
