@@ -40,23 +40,6 @@ function MeetupEvent(config) {
   this.status = config.status;
 }
 
-// Events.prototype.insert = function() {
-//   knex('events').insert({
-//     name: this.name,
-//     url: this.url,
-//     start_time: this.start_time,
-//     end_time: this.end_time,
-//     group_name: this.group_name,
-//     venue: this.venue
-//   }).returning('*')
-//   .then(function(data) {
-//     console.log(data);
-//   })
-//   .catch(function(error) {
-//     console.log(error);
-//   })
-// }
-
 module.exports = {
   EventBriteEvent: EventBriteEvent,
   MeetupEvent: MeetupEvent
