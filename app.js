@@ -32,7 +32,7 @@ app.use(cookieSession({
 }));
 
 // uncomment after placing your favicon in /public
-app.use(favicon(path.join(__dirname, '/public/img/favicons/favicon.ico')));
+app.use(favicon(path.join(__dirname, '/img/favicons/favicon.ico')));
 // console.log(path.join(__dirname, '/public/img/favicons/favicon.ico'))
 app.use(logger('dev'));
 app.use(bodyParser.json());
