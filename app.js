@@ -3,7 +3,7 @@
 let express = require('express'),
     app = express(),
     path = require('path'),
-    // favicon = require('serve-favicon'),
+    favicon = require('serve-favicon'),
     logger = require('morgan'),
     cookieParser = require('cookie-parser'),
     cookieSession = require("cookie-session"),
