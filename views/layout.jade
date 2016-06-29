@@ -4,20 +4,32 @@ html(lang='en')
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    title= Title
+    title
+      | Event Listener
+      = title === 'Main' ? '' : ' - ' + title
     link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', rel='stylesheet')
-    link(rel='stylesheet', href='/stylesheets/main.css')
-    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto')
     script(src='https://code.jquery.com/jquery-3.0.0.min.js')
+    link(rel='stylesheet', href='/stylesheets/main.css')
+    if (title === 'Events' || title === 'Saved Events')
+      link(rel='stylesheet', href='/stylesheets/events.css')
+    if (title === 'Messages')
+      link(rel='stylesheet', href='/stylesheets/messages.css')
+      script(src='/js/messages.js')
+    if (title === "Message")
+      link(rel='stylesheet', href='/stylesheets/message.css')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto')
     script(src='/js/events.js')
   body
+    div#status
     ul
       li
         a(class=(title === 'Main' ? 'active' : '') href='/') Home
       li
         a(class=(title === 'Events' ? 'active' : '') href='/events') Events
       li
-        a(class=(title === 'Messages' ? 'active' : '') href='/messages') Messages
+        a(class=(title === 'Saved Events' ? 'active' : '') href='/users/' + id + '/events') Saved
+      li
+        a(class=(title === 'Messages' ? 'active' : '') href='/users/' + id + '/messages') Messages
       li(style='float:right')
         a(href='/logout') Log Out
       li(style='float:right')

@@ -1,0 +1,23 @@
+#messages-container {
+  text-align: center;
+}
+
+table {
+  border: 1px solid #000;
+  margin: 25px auto;
+  text-align: left;
+}
+
+th, td {
+  border: 1px solid #000;
+  font-size: 16px;
+  padding: 10px 25px
+}
+
+button {
+  margin: 0 10px;
+}
+
+p {
+  margin: 25px auto;
+}
