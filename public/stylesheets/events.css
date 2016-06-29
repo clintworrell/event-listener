@@ -40,14 +40,21 @@ button:disabled:hover {
 #receiver-form {
   background-color: #527787;
   color: #fff;
-  display: none;
+  height: 400px;
+  left: -400px;
+  margin-top: -200px;
   opacity: 0.9;
   padding: 5px;
   position: fixed;
+  top: 50%;
   width: 400px;
   z-index: 1;
 }
 
 #receiver {
   color: #000;
+}
+
+#body {
+  resize: none;
 }

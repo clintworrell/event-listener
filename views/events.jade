@@ -11,10 +11,10 @@ block content
         input.form-control#subject(name='subject' type="text" value= compose ? compose.subject : '')
       div.form-group
         label(for='body') Body:
-        textarea.form-control#body(name='body')= compose ? compose.body : ''
+        textarea.form-control#body(name='body' rows='7')= compose ? compose.body : ''
       div.form-group(style="text-align: center;")
         input.btn.btn-danger#compose-cancel(data-id=id type="button" value="Cancel")    
-        input.btn.btn-success#compose-submit(data-id=id type="submit" value="Send Message")
+        input.btn.btn-success#compose-submit(data-id=id type="button" value="Send Message")
   div.container
     h1= title === "Events" ? "Events" : "Saved Events"
     div.row

@@ -22,18 +22,48 @@ $(function() {
 
   $(".share-event-btn").on("click", function(e) {
     let form = $("#receiver-form");
-    form.css("display") === "none" ? form.css("display", "inline") : form.css("display", "none");
-    form.css({
-      top: e.pageY - 100,
-      left: e.pageX + 25,
-    });
     $("#subject").val("RE: " + $(this).data("event").name);
     $("#body").val("Get more info here:\n" + $(this).data("event").url);
-    // $.ajax({
-    //   url: '/events',
-    //   method: 'POST',
-    //   data: $(this).data("event"),
-    // });
+    form.animate({
+      left: 0
+    }, 300, "linear");
+  });
+
+  $("#compose-submit").on("click", function(e) {
+    let message = {
+      receiver: $("#receiver").val(),
+      subject: $("#subject").val(),
+      body: $("#body").val()
+    }
+    if ($("#receiver").val() === "" || $("#body").val() === "") {
+      $("#status").text("Please complete the form.");
+      $("#status").animate({
+        top: 0
+      }, 300, "linear")
+      setTimeout(function() {
+        $("#status").animate({
+          top: "-48px"
+        }, 300, "linear")
+      }, 2000);
+    } else {
+      $("#receiver-form").hide();
+      $.ajax({
+        url: '/users/' + $(this).data('id') + '/messages',
+        method: 'POST',
+        data: message,
+        success: (data) => {
+          $("#status").text(data);
+          $("#status").animate({
+            top: 0
+          }, 300, "linear")
+          setTimeout(function() {
+            $("#status").animate({
+              top: "-48px"
+            }, 300, "linear")
+          }, 2000);
+        }
+      });
+    }
   });
 
   $(".event-row").on("mouseenter", function() {
@@ -47,6 +77,8 @@ $(function() {
   });
 
   $("#compose-cancel").on("click", function() {
-    $("#receiver-form").hide();
+    $("#receiver-form").animate({
+      left: -400
+    }, 300, "linear");
   })
 });
