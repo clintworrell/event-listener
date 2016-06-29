@@ -1,0 +1,92 @@
+/*::selection {
+  background-color: #527787;
+}
+
+::-moz-selection {
+  background-color: #527787;
+}*/
+
+body {
+  background: #2C4251;
+}
+
+/*.container {
+  margin: 0 auto;
+}*/
+
+#logbox {
+  padding: 10px;
+  margin: 0 auto;
+  width: 550px;
+  height: 500px;
+  background-color: #fff;
+}
+
+form {
+  justify-content: center;
+  height: 500px;
+}
+
+
+
+h1 {
+  text-align: center;
+  font-size: 175%;
+  color: #527787;
+  font-weight: 300;
+}
+
+h1, input {
+  font-family: "Open Sans", Helvetica, sans-serif;
+}
+
+.input {
+  width: 75%;
+  height: 50px;
+  display: block;
+  margin: 0 auto 15px;
+  padding: 0 15px;
+  border: none;
+  border-bottom: 2px solid #ebebeb;
+}
+.input:focus {
+  outline: none;
+  border-bottom-color: #FF9B71 !important;
+}
+.input:hover {
+  border-bottom-color: #FF9B71;
+}
+.input:invalid {
+  box-shadow: none;
+}
+
+.pass:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset;
+}
+
+.inputButton {
+  position: relative;
+  width: 85%;
+  height: 50px;
+  display: block;
+  margin: 30px auto 30px;
+  color: white;
+  background-color: #527787;
+  border: none;
+  -webkit-box-shadow: 0 5px 0 #FF9B71;
+  -moz-box-shadow: 0 5px 0 #FF9B71;
+  box-shadow: 0 5px 0 #FF9B71;
+}
+.inputButton:hover {
+  top: 2px;
+  -webkit-box-shadow: 0 3px 0 #2CADAD;
+  -moz-box-shadow: 0 3px 0 #2CADAD;
+  box-shadow: 0 3px 0 #2CADAD;
+}
+.inputButton:active {
+  top: 5px;
+  box-shadow: none;
+}
+.inputButton:focus {
+  outline: none;
+}

@@ -66,7 +66,7 @@ form.login input[type="text"], form.login input[type="password"] {
   outline: 0;
 }
 
-form.login input[type="submit"] {
+form.login input[type="submit"], form.login input[type="button"]{
   width: 100%;
   font-size: 14px;
   text-transform: uppercase;

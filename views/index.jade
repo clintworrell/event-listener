@@ -27,7 +27,8 @@ html(lang='en')
               if (loginError)
                 p.warning= loginError
               input.btn.btn-success.btn-xs(type='submit', value='Sign In')
-              input.btn.btn-success.btn-xs(type='submit', value='Create account')
+              a(href='/signup')
+                input.btn.btn-success.btn-xs(type='button', value='Create account')
               br
               br
               br

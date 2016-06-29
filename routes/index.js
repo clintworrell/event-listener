@@ -37,7 +37,12 @@ router.post('/', function(req, res, next) {
   });
 });
 
-router.post('/', function(req, res, next) {
+
+router.get('/signup', function(req, res, next) {
+  res.render('signup');
+});
+
+router.post('/signup', function(req, res, next) {
     knex('users')
     .where({username:req.body.username, email:req.body.email, password:req.body.password})
     .first()
