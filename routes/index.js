@@ -37,4 +37,24 @@ router.post('/', function(req, res, next) {
   });
 });
 
+router.post('/', function(req, res, next) {
+    knex('users')
+    .where({username:req.body.username, email:req.body.email, password:req.body.password})
+    .first()
+    .then(function(user) {
+      if(!user) {
+        var hash = bcrypt.hashSync(req.body.password, 8);
+        knex('users').insert({
+          username: req.body.username,
+          email: req.body.email,
+          password: hash
+        }).then(function() {
+            res.redirect('/');
+        });
+      } else {
+        res.send('Account already exists');
+      }
+    });
+});
+
 module.exports = router;
