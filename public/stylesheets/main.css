@@ -42,3 +42,16 @@ a.active {
 h1 {
   margin: 20px;
 }
+
+#status {
+  background-color: #E84855;
+  height: 48px;
+  left: 50%;
+  font-size: 24px;
+  margin-left: -250px;
+  position: fixed;
+  text-align: center;
+  top: -48px;
+  width: 500px;
+  z-index: 1;
+}

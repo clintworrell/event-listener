@@ -1,8 +1,8 @@
 extends layout
  
 block content
-  h1= title === "Events" ? "Events" : "Saved Events"
   div.container
+    h1= title === "Events" ? "Events" : "Saved Events"
     div.row
       div.col-md-4
         form.form-horizontal(action="/events/search", method="post")

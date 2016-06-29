@@ -6,7 +6,15 @@ $(function() {
       method: 'POST',
       data: $(this).data("event"),
       success: (data) => {
-        console.log(data);
+        $("#status").text(data);
+        $("#status").animate({
+          top: 0
+        }, 300, "linear")
+        setTimeout(function() {
+          $("#status").animate({
+            top: "-48px"
+          }, 300, "linear")
+        }, 2000);
         $(this).html("<span class='glyphicon glyphicon-ok' aria-hidden='true'></span>");
         $(this).prop("disabled", true);
       }

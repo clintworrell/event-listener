@@ -24,8 +24,8 @@ router.get('/', function(req, res, next) {
     res.render('events', {
       title: "Events",
       events: events,
-      username: req.session.user.username,
-      id: req.session.user.id,
+      username: req.session.username,
+      id: req.session.id,
       currentPage: parseInt(currentPage)
     });
   });
@@ -39,7 +39,7 @@ router.post('/', function(req, res, next) {
   .then(function(existingEvent) {
     if (existingEvent) {
       knex('users_events')
-      .where('users_events.user_id', req.session.user.id)
+      .where('users_events.user_id', req.session.id)
       .andWhere('users_events.event_id', existingEvent.id)
       .first()
       .then(function(existingUserEvent) {
@@ -48,12 +48,12 @@ router.post('/', function(req, res, next) {
         } else {
           knex('users_events')
           .insert({
-            user_id: req.session.user.id,
+            user_id: req.session.id,
             event_id: existingEvent.id
           })
           .returning('*')
           .then(function(newUserEvent) {
-            res.json("You added " + newUserEvent.name);
+            res.json("Event saved.");
           })
         }
       })
@@ -71,12 +71,12 @@ router.post('/', function(req, res, next) {
       .then(function(newEvent) {
         knex('users_events')
         .insert({
-          user_id: req.session.user.id,
-          event_id: newEvent.id
+          user_id: req.session.id,
+          event_id: newEvent[0].id
         })
         .returning('*')
         .then(function(newUserEvent) {
-          res.json("You created a new event and added it to your list.")
+          res.json("Event saved.*")
         })
       });
     }
@@ -123,8 +123,8 @@ router.post('/search', function(req, res, next) {
     res.render('events', {
       title: "Events",
       events: eventsPromises,
-      username: req.session.user.username,
-      id: req.session.user.id
+      username: req.session.username,
+      id: req.session.id
     });
   })
   .catch(function(error) {

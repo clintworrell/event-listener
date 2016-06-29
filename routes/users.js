@@ -5,31 +5,35 @@ let express = require('express'),
     knex = require('../db/knex'),
     bcrypt = require('bcrypt');
 
-router.get('/:userId', function(req, res, next) {
-  if (req.session.user) {
-    knex('users')
-    .where('id', req.params.userId)
-    .then(function(user) {
-      res.render('main', {
-        title: "Main",
-        username: req.session.user.username,
-        id: req.session.user.id
-      });
-    })
+router.use('/:userId*', function(req, res, next) {
+  if (req.session.id == req.params.userId) {
+    next();
   } else {
-    res.redirect('/');
+    res.redirect("/");
   }
+});
+
+router.get('/:userId', function(req, res, next) {
+  knex('users')
+  .where('id', req.params.userId)
+  .then(function(user) {
+    res.render('main', {
+      title: "Main",
+      username: req.session.username,
+      id: req.session.id
+    });
+  });
 });
 
 router.get('/:userId/messages', function(req, res, next) {
   knex('messages')
-  .where('receiver', req.session.user.id)
+  .where('receiver', req.session.id)
   .then(function(messages) {
     res.render('messages', {
       title: "Messages",
       messages: messages,
-      username: req.session.user.username,
-      id: req.session.user.id
+      username: req.session.username,
+      id: req.session.id
     })
   });
 });
@@ -37,13 +41,13 @@ router.get('/:userId/messages', function(req, res, next) {
 router.get('/:userId/events', function(req, res, next) {
   knex('events')
   .join('users_events', 'users_events.event_id', 'events.id')
-  .where('users_events.user_id', req.session.user.id)
+  .where('users_events.user_id', req.session.id)
   .then(function(userEvents) {
     res.render('events', {
       title: "Saved Events",
       events: userEvents,
-      username: req.session.user.username,
-      id: req.session.user.id
+      username: req.session.username,
+      id: req.session.id
     })
   })
 })
