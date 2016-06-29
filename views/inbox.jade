@@ -18,16 +18,16 @@ div.container
   div.row
     div.col-md-3
     div.col-md-6
-      form#compose(action='/users/' + id + '/messages' method='POST')
+      form#compose
         div.form-group
           label(for='receiver') To:
-          input.form-control#receiver(name='receiver' type="text" required)
+          input.form-control#receiver(name='receiver' type="text")
         div.form-group
           label(for='subject') Subject:
-          input.form-control#subject(name='subject' type="text" required)
+          input.form-control#subject(name='subject' type="text" value= compose ? compose.subject : '')
         div.form-group
           label(for='body') Body:
-          textarea.form-control(name='body' required)
+          textarea.form-control#body(name='body')= compose ? compose.body : ''
         div.form-group(style="text-align: center;")
-          input.btn.btn-success#compose-submit(type="submit" value="Send Message")
+          input.btn.btn-success#compose-submit(data-id=id type="button" value="Send Message")
     div.col-md-3

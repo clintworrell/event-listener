@@ -29,10 +29,25 @@ a.disabled {
   pointer-events: none;
 }
 
-.add-event-btn {
+.add-event-btn, .share-event-btn {
   display: none;
 }
 
 button:disabled:hover {
   cursor: pointer;
+}
+
+#receiver-form {
+  background-color: #527787;
+  color: #fff;
+  display: none;
+  opacity: 0.9;
+  padding: 5px;
+  position: fixed;
+  width: 400px;
+  z-index: 1;
+}
+
+#receiver {
+  color: #000;
 }
