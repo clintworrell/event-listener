@@ -81,7 +81,26 @@ router.get('/:userId/events', function(req, res, next) {
 });
 
 router.post('/:userId/messages', function(req, res, next) {
-
+  knex('users').select('id')
+  .where('username', req.body.receiver)
+  .first()
+  .then(function(receiver) {
+    if (receiver) {
+      knex('messages')
+      .insert({
+        sender: req.session.id,
+        receiver: receiver.id,
+        subject: req.body.subject,
+        body: req.body.body
+      })
+      .returning('*')
+      .then(function(message) {
+        res.json(message);
+      })
+    } else {
+      res.json("No user found");
+    }
+  });
 });
 
 module.exports = router;
