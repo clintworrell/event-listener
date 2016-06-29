@@ -1,0 +1,33 @@
+table#inbox
+  thead
+    tr
+      th
+      th From
+      th Subject
+      th Date
+  tbody
+    each message in messages
+      tr
+        td
+          input(type="checkbox")
+        td(class=(message.read ? '' : "unread"))= message.username
+        td
+          a(class=(message.read ? '' : "unread") href='/users/' + id + '/messages/' + message.id)= message.subject
+        td(class=(message.read ? '' : "unread"))= message.date
+div.container
+  div.row
+    div.col-md-3
+    div.col-md-6
+      form#compose(action='/users/' + id + '/messages' method='POST')
+        div.form-group
+          label(for='receiver') To:
+          input.form-control#receiver(name='receiver' type="text" required)
+        div.form-group
+          label(for='subject') Subject:
+          input.form-control#subject(name='subject' type="text" required)
+        div.form-group
+          label(for='body') Body:
+          textarea.form-control(name='body' required)
+        div.form-group(style="text-align: center;")
+          input.btn.btn-success#compose-submit(type="submit" value="Send Message")
+    div.col-md-3

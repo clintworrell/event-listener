@@ -26,7 +26,8 @@ router.get('/:userId', function(req, res, next) {
 });
 
 router.get('/:userId/messages', function(req, res, next) {
-  knex('messages')
+  knex('messages').select('messages.id', 'messages.subject', 'messages.date', 'messages.read', 'users.username')
+  .join('users', 'users.id', 'messages.sender')
   .where('receiver', req.session.id)
   .then(function(messages) {
     res.render('messages', {
@@ -35,6 +36,33 @@ router.get('/:userId/messages', function(req, res, next) {
       username: req.session.username,
       id: req.session.id
     })
+  });
+});
+
+router.get('/:userId/messages/:messageId', function(req, res, next) {
+  knex('messages').select('messages.id', 'messages.subject', 'messages.date', 'messages.body', 'users.username')
+  .join('users', 'users.id', 'messages.sender')
+  .where('receiver', req.session.id)
+  .andWhere('messages.id', req.params.messageId)
+  .first()
+  .then(function(message) {
+    if (message) {
+      knex('messages')
+      .where('id', message.id)
+      .update({
+        read: true
+      })
+      .returning('*')
+      .then(function() {
+        console.log("Message #" + message.id + " marked as read.")
+      });
+    }
+    res.render('messages', {
+      title: "Message",
+      message: message ? message : null,
+      username: req.session.username,
+      id: req.session.id
+    });
   });
 });
 
@@ -50,6 +78,10 @@ router.get('/:userId/events', function(req, res, next) {
       id: req.session.id
     })
   })
-})
+});
+
+router.post('/:userId/messages', function(req, res, next) {
+
+});
 
 module.exports = router;

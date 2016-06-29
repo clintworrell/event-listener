@@ -15,3 +15,15 @@ th, td {
 button {
   margin: 0 10px;
 }
+
+.unread {
+  font-weight: bold;
+}
+
+#compose {
+  display: none;
+}
+
+#compose {
+  text-align: left;
+}
