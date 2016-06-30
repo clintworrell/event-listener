@@ -21,11 +21,11 @@ knex('events').select()
   });
   return Promise.all(usersPromises);
 })
-.then( (eventLists) => {
+.then( (eventUserList) => {
   let emailPromises = [];
-  eventLists.forEach( (events) => {
+  eventUserList.forEach( (events) => {
     events.forEach ( (userEvent) => {
-      console.log(userEvent);
+      // console.log(userEvent);
       let sendEmailPromise = sendReminderEmail(userEvent);
       emailPromises.push(sendEmailPromise);
     });
@@ -37,11 +37,9 @@ knex('events').select()
 });
 
 function sendReminderEmail(userEvent) {
-  let user_email = userEvent.email;
-
   let from_email = new helper.Email("event-listener@example.com")
-  let to_email = new helper.Email(user_email);
-  let subject = `Event reminder: ${userEvent.name}`;
+  let to_email = new helper.Email(userEvent.email);
+  let subject = `Reminder: ${userEvent.name}`.slice(0,77);
   let content = new helper.Content("text/html",
         `<html>
           <head>
@@ -74,30 +72,27 @@ function sendReminderEmail(userEvent) {
 
   return sendEmailPromisify(request)
   .then( (response) => {
-    console.log(response);
+    // console.log(response);
     if(response.statusCode === 202) {
       console.log("reminder was sent successfully");
       knex('users_events').where('user_id', '=', userEvent.user_id).andWhere('event_id', '=', userEvent.event_id)
-      .update({reminder: true}).returning('id')
-      .then( (userEventId) => {
-        console.log(`Updated reminder field`);
+      .update({reminder: true}).returning('*')
+      .then( (updatedUserEvents) => {
+        console.log(`Successfuly updated reminder field`);
+        console.log(updatedUserEvents);
       });
     } else {
       console.log("Failed to send reminder")
     }
-
   });
-
-  function sendEmailPromisify(emailRequest) {
-    return new Promise((resolve, reject) => {
-      sg.API(emailRequest, (response) => {
-          resolve(response);
-      });
-    });
-  };
 
 }
 
 
-
-// worker send reminders to users who saved the events
+function sendEmailPromisify(emailRequest) {
+  return new Promise((resolve, reject) => {
+    sg.API(emailRequest, (response) => {
+        resolve(response);
+    });
+  });
+};
