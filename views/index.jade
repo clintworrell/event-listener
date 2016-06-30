@@ -21,10 +21,11 @@ html(lang='en')
         input.input.pass(name='password', type='password', placeholder='Choose a password', required='required')
         input.input.pass(name='password2', type='password', placeholder='Confirm password', required='required')
         input.inputButton(type='submit', value='Sign me up!')
-        button.loginBtn.loginBtn--google Login with Google
-        if (signUpError)
-          p#warning
-            strong= signUpError
+      form(action='/auth/google' method='GET')
+        button.loginBtn.loginBtn--google(type='submit') Login with Google
+      if (signUpError)
+        p#warning
+          strong= signUpError
     div#indexnav
       ul
         li
