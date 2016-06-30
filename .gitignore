@@ -31,7 +31,6 @@ npm-debug.log
 
 # Config file
 .env
-Procfile
 
 # Unused files
 unused
