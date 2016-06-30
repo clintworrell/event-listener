@@ -20,7 +20,7 @@ router.use(function(req, res, next){
       country: geo.country
     };
   }
-  console.log(res.locals.location)
+  console.log(res.locals.location);
   next();
   // res.json({ip: ip, geo:geo});
 });
