@@ -85,9 +85,7 @@ function sendReminderEmail(userEvent) {
       console.log("Failed to send reminder")
     }
   });
-
 }
-
 
 function sendEmailPromisify(emailRequest) {
   return new Promise((resolve, reject) => {
