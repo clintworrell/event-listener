@@ -7,7 +7,7 @@ let express = require('express'),
     searchMeetupEvents = require('./searchevents').searchMeetupEvents,
     EventBriteEvent = require('../models/events').EventBriteEvent,
     MeetupEvent = require('../models/events').MeetupEvent,
-    mongo = require('./searchmongo')
+    promisifyMongo = require('./searchmongo')
 
 router.get('/', function(req, res, next) {
   let currentPage = 1;
@@ -101,7 +101,7 @@ router.post('/search', function(req, res, next) {
       allEvents.push(new MeetupEvent(event));
     });
     eventBriteEvents.forEach(function(event) {
-      eventBritePromises.push(mongo.promisifyMongo(new EventBriteEvent(event)));
+      eventBritePromises.push(promisifyMongo(new EventBriteEvent(event)));
     });
     Promise.all(eventBritePromises)
     .then(function(response) {

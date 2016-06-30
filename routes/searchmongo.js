@@ -76,10 +76,4 @@ function promisifyVenue(event) {
 // venues.update({venueId: "15519396"}, {$set: {venueName: "Great American Music Hal"}});
 // venues.update({venueId: "14150503"}, {$set: {venueName: "The Troubadour"}});
 
-module.exports = {
-  organizers: organizers,
-  venues: venues,
-  promisifyMongo: promisifyMongo,
-  promisifyOrganizer: promisifyOrganizer,
-  promisifyVenue: promisifyVenue
-}
+module.exports = promisifyMongo
