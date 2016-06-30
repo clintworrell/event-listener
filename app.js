@@ -17,6 +17,8 @@ let express = require('express'),
     usersApi = require('./routes/api/v1/users'),
     eventsApi = require('./routes/api/v1/events');
 
+
+
 require('dotenv').load();
 
 // view engine setup
@@ -45,6 +47,7 @@ app.use('/users', users);
 app.use('/events', events);
 app.use('/api/v1/users', usersApi);
 app.use('/api/v1/events', eventsApi);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

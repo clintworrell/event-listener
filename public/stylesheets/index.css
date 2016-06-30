@@ -244,28 +244,24 @@ form.login a:hover {
 
 
 .SearchIcon {
-
-    color:#fff;
+  color:#fff;
 }
-.SearchButton {
 
+.SearchButton {
   background-color:#527787;
   border-radius:1px;
+  margin-top: 9.3px;
 }
+
 .SearchButton:hover {
-
   background-color:#FF9B71;
-
 }
 
 .SearchBar {
-
   min-width: 300px;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
-  background: blue;
-  /*height: 100vh;*/
 
 }

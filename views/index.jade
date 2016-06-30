@@ -24,13 +24,12 @@ html(lang='en')
             form.login(action='/' method='POST')
               .row
                 .col-lg-6
-            form(action='/search' method="GET")
-              a(href='/events')
-                .input-group
-                  input.form-control.SearchBar(type='text', placeholder='Search for...')
-                  span.input-group-btn
-                    button.btn.btn-default.SearchButton(type='button')
-                      span.glyphicon.glyphicon-search.SearchIcon
+
+                  .input-group
+                    input.form-control.SearchBar(type='text', placeholder='Search for events...')
+                    span.input-group-btn
+                      button.btn.btn-default.SearchButton(type='button')
+                        span.glyphicon.glyphicon-search.SearchIcon
               input(name='username' type='text', placeholder='Username')
               input(name='password' type='password', placeholder='Password')
               if (loginError)
