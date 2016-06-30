@@ -5,6 +5,7 @@ let knex = require('../db/knex'),
 
 let now = new Date();
 let nowPlus24hrs = new Date(now.getTime() + (24 * 60 * 60 * 1000));
+console.log(now)
 
 knex('events').select()
 .where('start_time', '>=', now).andWhere('start_time', '<=', nowPlus24hrs).returning('*')
@@ -32,7 +33,7 @@ knex('events').select()
   return Promise.all(emailPromises);
 })
 .then( () => {
-  process.exit(0);
+  process.exit();
 });
 
 function sendReminderEmail(userEvent) {
