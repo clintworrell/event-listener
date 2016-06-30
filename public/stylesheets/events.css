@@ -29,7 +29,7 @@ a.disabled {
   pointer-events: none;
 }
 
-.add-event-btn, .share-event-btn {
+.add-event-btn, .share-event-btn, .delete-event-btn {
   display: none;
 }
 

@@ -11,11 +11,31 @@ $(function() {
         }, 300, "linear")
         setTimeout(function() {
           $("#status").animate({
-            top: "-48px"
+            top: -48
           }, 300, "linear")
         }, 2000);
         $(this).html("<span class='glyphicon glyphicon-ok' aria-hidden='true'></span>");
         $(this).prop("disabled", true);
+      }
+    });
+  });
+
+  $(".delete-event-btn").on("click", function() {
+    $.ajax({
+      url: '/users/' + $(this).data('id') + '/events/' + $(this).data('event').id,
+      method: 'DELETE',
+      data: $(this).data('event'),
+      success: (data) => {
+        $(this).closest('.event-row').remove();
+        $("#status").text(data);
+        $("#status").animate({
+          top: 0
+        }, 300, "linear")
+        setTimeout(function() {
+          $("#status").animate({
+            top: -48
+          }, 300, "linear")
+        }, 2000);
       }
     });
   });
@@ -25,7 +45,7 @@ $(function() {
     $("#subject").val("RE: " + $(this).data("event").name);
     $("#body").val("Get more info here:\n" + $(this).data("event").url);
     form.animate({
-      left: 0
+      left: 10
     }, 300, "linear");
   });
 
@@ -42,7 +62,7 @@ $(function() {
       }, 300, "linear")
       setTimeout(function() {
         $("#status").animate({
-          top: "-48px"
+          top: -48
         }, 300, "linear")
       }, 2000);
     } else {
@@ -60,7 +80,7 @@ $(function() {
           }, 300, "linear")
           setTimeout(function() {
             $("#status").animate({
-              top: "-48px"
+              top: -48
             }, 300, "linear")
           }, 2000);
         }
@@ -71,11 +91,13 @@ $(function() {
   $(".event-row").on("mouseenter", function() {
     $(this).find('.add-event-btn').css("display", "inline");
     $(this).find('.share-event-btn').css("display", "inline");
+    $(this).find('.delete-event-btn').css("display", "inline");
   });
 
   $(".event-row").on("mouseleave", function() {
     $(this).find('.add-event-btn').css("display", "none");
     $(this).find('.share-event-btn').css("display", "none");
+    $(this).find('.delete-event-btn').css("display", "none");
   });
 
   $("#compose-cancel").on("click", function() {

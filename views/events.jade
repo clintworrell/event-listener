@@ -39,7 +39,7 @@ block content
             tbody.event-row
               tr
                 td= event.start_time
-                td= event.organizer_name
+                td= event.organizer_name ? event.organizer_name : event.organizer_id
               tr
                 td= event.end_time
                 td
@@ -50,9 +50,12 @@ block content
                   if title === "Events"
                     button(data-event=event class="btn btn-primary add-event-btn" type="button")
                       span(class="glyphicon glyphicon-plus" aria-hidden="true")
+                  if title === "Saved Events"
+                    button(data-event=event data-id=id class="btn btn-danger delete-event-btn" type="button")
+                      span(class="glyphicon glyphicon-remove" aria-hidden="true")
                   button(data-event=event class="btn btn-success share-event-btn" type="button")
                     span(class="glyphicon glyphicon-share-alt" aria-hidden="true")
-                td= event.venue_name
+                td= event.venue_name ? event.venue_name : event.venue_id
               tr
                 td
                   | # of RSVPs
