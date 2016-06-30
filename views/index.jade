@@ -21,6 +21,7 @@ html(lang='en')
               img(src='/img/pinlogo.png', alt='Geotag Logo')
             h2 Event Listener,
             h3 Providing events near you.
+<<<<<<< HEAD
             form.login(action='/' method='POST')
               .row
                 .col-lg-6
@@ -30,6 +31,9 @@ html(lang='en')
                     span.input-group-btn
                       button.btn.btn-default.SearchButton(type='button')
                         span.glyphicon.glyphicon-search.SearchIcon
+=======
+            form.login(action='/login' method='POST')
+>>>>>>> master
               input(name='username' type='text', placeholder='Username')
               input(name='password' type='password', placeholder='Password')
               if (loginError)
@@ -41,7 +45,11 @@ html(lang='en')
               br
               br
             form(action='/auth/google' method='GET')
+<<<<<<< HEAD
               button.loginBtn.loginBtn--google(type='submit') Sign Up with Google
+=======
+              button.btn.btn-danger.btn-xs(type='submit') Sign Up with Google
+>>>>>>> master
               .remember-forgot
                 .row
                   .col-md-6

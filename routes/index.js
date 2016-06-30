@@ -18,7 +18,7 @@ router.get('/logout', function(req, res, next) {
   res.redirect('/');
 });
 
-router.post('/', function(req, res, next) {
+router.post('/login', function(req, res, next) {
   knex('users')
   .where('username', req.body.username)
   .first()
