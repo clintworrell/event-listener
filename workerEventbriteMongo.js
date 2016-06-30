@@ -2,10 +2,8 @@
 
 require("dotenv").load();
 
-let MongoClient = require('mongodb').MongoClient,
-    Server = require('mongodb').Server,
-    assert = require('assert'),
-    mongo = require('mongodb'),
+let
+    // mongo = require('mongodb'),
     monk = require('monk'),
     request = require('request'),
     db = monk('localhost:27017/test'),
