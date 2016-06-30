@@ -8,6 +8,7 @@
 
 body {
   background: #2C4251;
+
 }
 
 /*.container {
@@ -20,14 +21,15 @@ body {
   width: 550px;
   height: 500px;
   background-color: #fff;
+  display:inline-block;
+  vertical-align: middle;
+  float: none;
 }
 
-form {
-  justify-content: center;
+form#signup {
+  text-align: center;
   height: 500px;
 }
-
-
 
 h1 {
   text-align: center;

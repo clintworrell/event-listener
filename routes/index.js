@@ -29,14 +29,11 @@ router.post('/', function(req, res, next) {
         req.session.username = user.username;
         res.redirect('/users/' + req.session.id);
       } else {
-        res.render('index', {loginError: "Wrong password!"});
+        res.render('index', {loginError: "Invalid Username/Password"});
       }
-    } else {
-      res.render('index', {loginError: "Username not found!"});
     }
   });
 });
-
 
 router.get('/signup', function(req, res, next) {
   res.render('signup');
@@ -44,17 +41,23 @@ router.get('/signup', function(req, res, next) {
 
 router.post('/signup', function(req, res, next) {
     knex('users')
-    .where({username:req.body.username, email:req.body.email, password:req.body.password})
+    .where({username:req.body.username, email:req.body.email})
     .first()
     .then(function(user) {
+      //console.log(user);
       if(!user) {
         var hash = bcrypt.hashSync(req.body.password, 8);
         knex('users').insert({
+          id: req.session.id,
           username: req.body.username,
           email: req.body.email,
           password: hash
-        }).then(function() {
-            res.redirect('/');
+        })
+        .returning('*')
+        .then(function(user) {
+          req.session.id = user.id;
+          req.session.username = user.username;
+          res.redirect('/users/' + req.session.id);
         });
       } else {
         res.send('Account already exists');

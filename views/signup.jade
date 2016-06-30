@@ -11,13 +11,10 @@ html(lang='en')
     .container
       .col-md-6
         #logbox
-          form#signup(method='post', action='/signup')
+          form#signup(method='POST' action='/signup')
             h1 create an account
-            input.input.pass(name='user[name]', type='text', placeholder="What's your username?", autofocus='autofocus', required='required')
-            input.input.pass(name='user[email]', type='email', placeholder='Email address')
-            input.input.pass(name='user[password]', type='password', placeholder='Choose a password', required='required')
-            input.input.pass(name='user[password2]', type='password', placeholder='Confirm password', required='required')
+            input.input.pass(name='username', type='text', placeholder="What's your username?", autofocus='autofocus', required='required')
+            input.input.pass(name='email', type='email', placeholder='Email address')
+            input.input.pass(name='password', type='password', placeholder='Choose a password', required='required')
+            input.input.pass(name='password2', type='password', placeholder='Confirm password', required='required')
             input.inputButton(type='submit', value='Sign me up!')
-            .text-center
-              | already have an account?
-              a#login_id(href='#') login
