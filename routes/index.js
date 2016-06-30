@@ -13,7 +13,6 @@ router.use(function(req, res, next){
   var ip = req.clientIp;
   console.log(ip)
   var geo = geoip.lookup(ip);
-  console.log(geo)
   if(geo) {
     res.locals.location = {
       city: geo.city,
