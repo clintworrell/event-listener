@@ -44,7 +44,6 @@ router.post('/signup', function(req, res, next) {
     .where({username:req.body.username, email:req.body.email})
     .first()
     .then(function(user) {
-      //console.log(user);
       if(!user) {
         var hash = bcrypt.hashSync(req.body.password, 8);
         knex('users').insert({

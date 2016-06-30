@@ -240,3 +240,32 @@ form.login a:hover {
 .loginBtn--google:focus {
   background: #E74B37;
 }
+
+
+
+.SearchIcon {
+
+    color:#fff;
+}
+.SearchButton {
+
+  background-color:#527787;
+  border-radius:1px;
+}
+.SearchButton:hover {
+
+  background-color:#FF9B71;
+
+}
+
+.SearchBar {
+
+  min-width: 300px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  background: blue;
+  /*height: 100vh;*/
+
+}
