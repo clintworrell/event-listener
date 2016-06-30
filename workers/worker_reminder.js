@@ -1,11 +1,11 @@
 'use strict';
-// require('dotenv').load();
-let knex = require('./db/knex'),
+let knex = require('../db/knex'),
     helper = require('sendgrid').mail,
     sg = require('sendgrid').SendGrid(process.env.SENDGRID_API_KEY);
 
 let now = new Date();
 let nowPlus24hrs = new Date(now.getTime() + (24 * 60 * 60 * 1000));
+console.log(now)
 
 knex('events').select()
 .where('start_time', '>=', now).andWhere('start_time', '<=', nowPlus24hrs).returning('*')
@@ -25,7 +25,7 @@ knex('events').select()
   let emailPromises = [];
   eventUserList.forEach( (events) => {
     events.forEach ( (userEvent) => {
-      // console.log(userEvent);
+      console.log(userEvent);
       let sendEmailPromise = sendReminderEmail(userEvent);
       emailPromises.push(sendEmailPromise);
     });
@@ -33,7 +33,7 @@ knex('events').select()
   return Promise.all(emailPromises);
 })
 .then( () => {
-  process.exit(0);
+  process.exit();
 });
 
 function sendReminderEmail(userEvent) {
@@ -72,7 +72,7 @@ function sendReminderEmail(userEvent) {
 
   return sendEmailPromisify(request)
   .then( (response) => {
-    // console.log(response);
+    console.log(response);
     if(response.statusCode === 202) {
       console.log("reminder was sent successfully");
       knex('users_events').where('user_id', '=', userEvent.user_id).andWhere('event_id', '=', userEvent.event_id)
@@ -80,14 +80,16 @@ function sendReminderEmail(userEvent) {
       .then( (updatedUserEvents) => {
         console.log(`Successfuly updated reminder field`);
         console.log(updatedUserEvents);
-      });
+      })
+      .catch( (error) => {
+        console.log('Failed to update reminder field')
+        console.log(error);
+      })
     } else {
       console.log("Failed to send reminder")
     }
   });
-
 }
-
 
 function sendEmailPromisify(emailRequest) {
   return new Promise((resolve, reject) => {
