@@ -22,13 +22,13 @@ block content
         form.form-horizontal(action="/events/search", method="post")
           div.form-group
             label Keyword
-            input.form-control(type="text",  name="keyword", placeholder="software, music, ...", value="hackathon")
+            input.form-control(type="text",  name="keyword", placeholder="ex) hiking, coffee")
           div.form-group
             label Location
-            input.form-control(type="text",  name="location", placeholder="san francisco, ...", value="san francisco")
+            input.form-control(type="text",  name="location", placeholder="ex) san francisco")
           div.form-group
             label Search radius
-            input.form-control(type="text",  name="radius", placeholder="10mi, ...", value="10mi")
+            input.form-control(type="text",  name="radius", placeholder="ex) 10mi")
           div.form-group
             button.btn.btn-large.btn-success(type="submit") Find Events
       div.col-md-8

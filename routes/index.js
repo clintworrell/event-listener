@@ -3,7 +3,29 @@
 let express = require('express'),
     router = express.Router(),
     knex = require('../db/knex'),
-    bcrypt = require('bcrypt');
+    bcrypt = require('bcrypt'),
+    geoip = require('geoip-lite'),
+    requestIp = require('request-ip');
+
+router.use(requestIp.mw());
+
+router.use(function(req, res, next){
+  var ip = req.clientIp;
+  console.log(ip)
+  var geo = geoip.lookup(ip);
+  console.log(geo)
+  if(geo) {
+    res.locals.location = {
+      city: geo.city,
+      state: geo.region,
+      country: geo.country
+    };
+  }
+  console.log(res.locals.location)
+  next();
+  // res.json({ip: ip, geo:geo});
+});
+
 
 router.get('/', function(req, res, next) {
   if (req.session.id) {
