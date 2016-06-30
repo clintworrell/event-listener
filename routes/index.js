@@ -35,33 +35,36 @@ router.post('/login', function(req, res, next) {
   });
 });
 
-router.get('/signup', function(req, res, next) {
-  res.render('signup');
-});
-
 router.post('/signup', function(req, res, next) {
+  if (req.body.password === req.body.password2) {
     knex('users')
-    .where({username:req.body.username, email:req.body.email})
+    .where('username', req.body.username)
+    .orWhere('email', req.body.email)
     .first()
     .then(function(user) {
-      if(!user) {
-        var hash = bcrypt.hashSync(req.body.password, 8);
-        knex('users').insert({
-          id: req.session.id,
+      if (user) {
+        res.render('index', {signUpError: "Account already exists."});
+      } else {
+        let hash = bcrypt.hashSync(req.body.password, 10);
+        knex('users')
+        .insert({
           username: req.body.username,
-          email: req.body.email,
-          password: hash
+          password: hash,
+          firstname: req.body.firstname,
+          lastname: req.body.lastname,
+          email: req.body.email
         })
         .returning('*')
-        .then(function(user) {
-          req.session.id = user.id;
-          req.session.username = user.username;
+        .then(function(newUser) {
+          req.session.id = newUser[0].id;
+          req.session.username = newUser[0].username;
           res.redirect('/users/' + req.session.id);
         });
-      } else {
-        res.send('Account already exists');
       }
     });
+  } else {
+    res.render('index', {signUpError: "Passwords do not match."})
+  }
 });
 
 module.exports = router;
