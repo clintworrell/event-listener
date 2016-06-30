@@ -19,15 +19,7 @@ $(function() {
       method: 'POST',
       data: message,
       success: (data) => {
-        $("#status").text(data);
-        $("#status").animate({
-          top: 0
-        }, 300, "linear")
-        setTimeout(function() {
-          $("#status").animate({
-            top: "-48px"
-          }, 300, "linear")
-        }, 2000);
+        animateSlide("#status", "top", 48, 300, data);
       }
     })
   });
