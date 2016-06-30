@@ -25,7 +25,7 @@ knex('events').select()
   let emailPromises = [];
   eventUserList.forEach( (events) => {
     events.forEach ( (userEvent) => {
-      // console.log(userEvent);
+      console.log(userEvent);
       let sendEmailPromise = sendReminderEmail(userEvent);
       emailPromises.push(sendEmailPromise);
     });
@@ -72,7 +72,7 @@ function sendReminderEmail(userEvent) {
 
   return sendEmailPromisify(request)
   .then( (response) => {
-    // console.log(response);
+    console.log(response);
     if(response.statusCode === 202) {
       console.log("reminder was sent successfully");
       knex('users_events').where('user_id', '=', userEvent.user_id).andWhere('event_id', '=', userEvent.event_id)
