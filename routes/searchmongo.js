@@ -4,9 +4,11 @@ let MongoClient = require('mongodb').MongoClient,
     Server = require('mongodb').Server,
     assert = require('assert'),
     mongo = require('mongodb'),
-    monk = require('monk'),
+    monk = require('monk');
     // db = monk(process.env.MONGOLAB_URI.split('//')[1]);
-    db = monk(process.env.MONGOLAB_URI);
+    console.log(process.env.MONGOLAB_URI)
+    var db = monk(process.env.MONGOLAB_URI);
+    console.log(process.env.MONGOLAB_URI)
     // db = monk('localhost:27017/test');
 
 let organizers = db.get('organizers');
