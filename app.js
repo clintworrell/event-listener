@@ -1,5 +1,5 @@
 "use strict";
-
+require('dotenv').load();
 let express = require('express'),
     app = express(),
     path = require('path'),
@@ -21,11 +21,6 @@ let express = require('express'),
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     authRoute = require('./routes/auth');
 
-
-
-
-
-require('dotenv').load();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

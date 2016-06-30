@@ -10,17 +10,18 @@ html(lang='en')
     link(rel='icon' type='image/png', href='/img/favicomatic/favicon-32x32.png', sizes='32x32')
     link(rel='icon' type='image/png', href='/img/favicomatic/favicon-16x16.png', sizes='16x16')
     link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', rel='stylesheet')
-    script(src='https://code.jquery.com/jquery-3.0.0.min.js')
     link(rel='stylesheet', href='/stylesheets/main.css')
+    script(src='https://code.jquery.com/jquery-3.0.0.min.js')
+    script(src='/js/main.js')
     if (title === 'Events' || title === 'Saved Events')
       link(rel='stylesheet', href='/stylesheets/events.css')
+      script(src='/js/events.js')
     if (title === 'Messages')
       link(rel='stylesheet', href='/stylesheets/messages.css')
       script(src='/js/messages.js')
     if (title === "Message")
       link(rel='stylesheet', href='/stylesheets/message.css')
     link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto')
-    script(src='/js/events.js')
   body
     div#status
     ul
@@ -31,7 +32,7 @@ html(lang='en')
       li
         a(class=(title === 'Saved Events' ? 'active' : '') href='/users/' + id + '/events') Saved
       li
-        a(class=(title === 'Messages' ? 'active' : '') href='/users/' + id + '/messages') Messages
+        a(class=(title === 'Messages' || title === 'Message' ? 'active' : '') href='/users/' + id + '/messages') Messages
       li(style='float:right')
         a(href='/logout') Log Out
       li(style='float:right')

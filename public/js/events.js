@@ -5,28 +5,29 @@ $(function() {
       method: 'POST',
       data: $(this).data("event"),
       success: (data) => {
-        $("#status").text(data);
-        $("#status").animate({
-          top: 0
-        }, 300, "linear")
-        setTimeout(function() {
-          $("#status").animate({
-            top: "-48px"
-          }, 300, "linear")
-        }, 2000);
+        animateSlide("#status", "top", 48, 300, data);
         $(this).html("<span class='glyphicon glyphicon-ok' aria-hidden='true'></span>");
         $(this).prop("disabled", true);
       }
     });
   });
 
-  $(".share-event-btn").on("click", function(e) {
-    let form = $("#receiver-form");
+  $(".delete-event-btn").on("click", function() {
+    $.ajax({
+      url: '/users/' + $(this).data('id') + '/events/' + $(this).data('event').id,
+      method: 'DELETE',
+      data: $(this).data('event'),
+      success: (data) => {
+        $(this).closest('.event-row').remove();
+        animateSlide("#status", "top", 48, 300, data);
+      }
+    });
+  });
+
+  $(".share-event-btn").on("click", function() {
     $("#subject").val("RE: " + $(this).data("event").name);
     $("#body").val("Get more info here:\n" + $(this).data("event").url);
-    form.animate({
-      left: 0
-    }, 300, "linear");
+    animateSlide("#receiver-form", "left", 400, 300, null, true);
   });
 
   $("#compose-submit").on("click", function(e) {
@@ -36,33 +37,20 @@ $(function() {
       body: $("#body").val()
     }
     if ($("#receiver").val() === "" || $("#body").val() === "") {
-      $("#status").text("Please complete the form.");
-      $("#status").animate({
-        top: 0
-      }, 300, "linear")
-      setTimeout(function() {
-        $("#status").animate({
-          top: "-48px"
-        }, 300, "linear")
-      }, 2000);
-    } else {
-      $("#receiver-form").animate({
-        left: -400
-      }, 300, "linear");
+      animateSlide("#status", "top", 48, 300, "Please complete the form.");
+    }
+    else {
       $.ajax({
         url: '/users/' + $(this).data('id') + '/messages',
         method: 'POST',
         data: message,
         success: (data) => {
-          $("#status").text(data);
-          $("#status").animate({
-            top: 0
-          }, 300, "linear")
-          setTimeout(function() {
-            $("#status").animate({
-              top: "-48px"
-            }, 300, "linear")
-          }, 2000);
+          animateSlide("#status", "top", 48, 300, data);
+          if (data === "Message sent.") {
+            $("#receiver-form").animate({
+              left: -400
+            }, 300, "linear");
+          }
         }
       });
     }
@@ -71,11 +59,13 @@ $(function() {
   $(".event-row").on("mouseenter", function() {
     $(this).find('.add-event-btn').css("display", "inline");
     $(this).find('.share-event-btn').css("display", "inline");
+    $(this).find('.delete-event-btn').css("display", "inline");
   });
 
   $(".event-row").on("mouseleave", function() {
     $(this).find('.add-event-btn').css("display", "none");
     $(this).find('.share-event-btn').css("display", "none");
+    $(this).find('.delete-event-btn').css("display", "none");
   });
 
   $("#compose-cancel").on("click", function() {
