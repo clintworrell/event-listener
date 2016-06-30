@@ -5,11 +5,9 @@ let MongoClient = require('mongodb').MongoClient,
     assert = require('assert'),
     mongo = require('mongodb'),
     monk = require('monk');
-    // db = monk(process.env.MONGOLAB_URI.split('//')[1]);
-    console.log(process.env)
+    // console.log(process.env)
     var db = monk(process.env.MONGODB_URI);
-    console.log(process.env)
-    // db = monk('localhost:27017/test');
+    // console.log(process.env)
 
 let organizers = db.get('organizers');
 let venues = db.get('venues');
