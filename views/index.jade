@@ -21,7 +21,7 @@ html(lang='en')
               img(src='/img/pinlogo.png', alt='Geotag Logo')
             h2 Event Listener,
             h3 Providing events near you.
-            p(style='color:white')= location ? location.city : ''
+            p(style='color:black')= location ? location.city : ''
             form.login(action='/login' method='POST')
               input(name='username' type='text', placeholder='Username')
               input(name='password' type='password', placeholder='Password')
