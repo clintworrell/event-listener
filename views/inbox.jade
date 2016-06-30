@@ -9,7 +9,7 @@ table#inbox
     each message in messages
       tr
         td
-          input(type="checkbox")
+          input(data-message=message type="checkbox")
         td(class=(message.read ? '' : "unread"))= message.username
         td
           a(class=(message.read ? '' : "unread") href='/users/' + id + '/messages/' + message.id)= message.subject

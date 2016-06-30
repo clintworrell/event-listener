@@ -103,6 +103,31 @@ router.post('/:userId/messages', function(req, res, next) {
   });
 });
 
+router.delete('/:userId/messages', function(req, res, next) {
+  let messageIds = req.body['messageIds[]'];
+  let messagePromises = [];
+  if (Array.isArray(messageIds)) {
+    messageIds.forEach(function(messageId) {
+      messagePromises.push(knex('messages')
+      .where('id', messageId)
+      .delete()
+      .returning('*'))
+    });
+    Promise.all(messagePromises)
+    .then(function(deletedMessages) {
+      res.json("Deleted messages.");
+    })
+  } else {
+    knex('messages')
+    .where('id', messageIds)
+    .delete()
+    .returning('*')
+    .then(function(deletedMessage) {
+      res.json("Deleted message.");
+    })
+  }
+});
+
 router.delete('/:userId/events/:eventId', function(req, res, next) {
   knex('users_events')
   .where('user_id', req.body.user_id)

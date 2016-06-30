@@ -24,6 +24,27 @@ $(function() {
     })
   });
 
+  $("input[type='checkbox']").on("click", function() {
+    $("#delete-btn").attr("disabled", !$("input[type='checkbox']").is(":checked"));
+  });
+
+  $("#delete-btn").on("click", function() {
+    let messageIds = [];
+    let selectedMessages = $("input:checked").map(function() {
+      messageIds.push($(this).data('message').id);
+    })
+    $.ajax({
+      url: '/users/' + $(this).data('id') + '/messages',
+      method: "DELETE",
+      data: {messageIds: messageIds},
+      success: (data) => {
+        animateSlide("#status", "top", 48, 300, data);
+      }
+    })
+  })
+
+  $("#delete-btn")
+
   function select(element) {
     $(element).show();
     $(`${element}-btn`).removeClass('btn-default');
@@ -35,4 +56,5 @@ $(function() {
     $(`${element}-btn`).removeClass('btn-primary');
     $(`${element}-btn`).addClass('btn-default');
   }
+
 });
