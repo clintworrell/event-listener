@@ -6,7 +6,8 @@ let express = require('express'),
     searchEventBriteEvents = require('./searchevents').searchEventBriteEvents,
     searchMeetupEvents = require('./searchevents').searchMeetupEvents,
     EventBriteEvent = require('../models/events').EventBriteEvent,
-    MeetupEvent = require('../models/events').MeetupEvent;
+    MeetupEvent = require('../models/events').MeetupEvent,
+    mongo = require('./searchmongo')
 
 router.get('/', function(req, res, next) {
   let currentPage = 1;
@@ -83,22 +84,6 @@ router.post('/', function(req, res, next) {
   });
 });
 
-// router.post('/', function(req, res, next) {
-//   knex('events')
-//   .insert({
-//     name: req.body.name,
-//     url: req.body.url,
-//     start_time: req.body.start_time,
-//     end_time: req.body.end_time,
-//     group_name: req.body.group_name,
-//     venue: req.body.venue
-//   })
-//   .returning('*')
-//   .then(function(addedEvent) {
-//     res.json(addedEvent);
-//   });
-// });
-
 router.post('/search', function(req, res, next) {
   let keyword = req.body.keyword;
   let location = req.body.location;
@@ -110,37 +95,31 @@ router.post('/search', function(req, res, next) {
   .then(function(searchResponse) {
     let meetupEvents = JSON.parse(searchResponse[0].body).results;
     let eventBriteEvents = JSON.parse(searchResponse[1].body).events;
-    let eventsPromises = [];
+    let allEvents = [];
+    let eventBritePromises = [];
     meetupEvents.forEach(function(event) {
-      eventsPromises.push(new MeetupEvent(event));
+      allEvents.push(new MeetupEvent(event));
     });
     eventBriteEvents.forEach(function(event) {
-      eventsPromises.push(new EventBriteEvent(event));
+      eventBritePromises.push(mongo.promisifyMongo(new EventBriteEvent(event)));
     });
-    eventsPromises.sort(function(a, b) {
-      return new Date(a.start_time) - new Date(b.start_time);
-    });
-    res.render('events', {
-      title: "Events",
-      events: eventsPromises,
-      username: req.session.username,
-      id: req.session.id
-    });
+    Promise.all(eventBritePromises)
+    .then(function(response) {
+      let filteredEvents = [];
+      response.forEach(function(pair) {
+        filteredEvents.push(pair[0]);
+      })
+      res.render('events', {
+        title: "Events",
+        events: filteredEvents,
+        username: req.session.username,
+        id: req.session.id
+      });
+    })
   })
   .catch(function(error) {
-    console.log(error);
-    res.send("Error");
+    res.json(error);
   });
 });
-
-// router.delete('/:id', function(req, res, next) {
-//   knex('events')
-//   .where('events.id', req.params.id)
-//   .del()
-//   .returning('*')
-//   .then(function(deletedEvent) {
-//     res.json(deletedEvent);
-//   });
-// });
 
 module.exports = router;

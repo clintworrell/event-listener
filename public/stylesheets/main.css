@@ -43,6 +43,10 @@ h1 {
   margin: 20px;
 }
 
+button {
+  margin: 5px;
+}
+
 #status {
   background-color: #E84855;
   height: 48px;

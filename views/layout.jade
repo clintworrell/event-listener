@@ -31,7 +31,7 @@ html(lang='en')
       li
         a(class=(title === 'Saved Events' ? 'active' : '') href='/users/' + id + '/events') Saved
       li
-        a(class=(title === 'Messages' ? 'active' : '') href='/users/' + id + '/messages') Messages
+        a(class=(title === 'Messages' || title === 'Message' ? 'active' : '') href='/users/' + id + '/messages') Messages
       li(style='float:right')
         a(href='/logout') Log Out
       li(style='float:right')

@@ -39,7 +39,7 @@ block content
             tbody.event-row
               tr
                 td= event.start_time
-                td= event.organizer_name
+                td= event.organizer_name ? event.organizer_name : event.organizer_id
               tr
                 td= event.end_time
                 td
@@ -52,7 +52,7 @@ block content
                       span(class="glyphicon glyphicon-plus" aria-hidden="true")
                   button(data-event=event class="btn btn-success share-event-btn" type="button")
                     span(class="glyphicon glyphicon-share-alt" aria-hidden="true")
-                td= event.venue_name
+                td= event.venue_name ? event.venue_name : event.venue_id
               tr
                 td
                   | # of RSVPs

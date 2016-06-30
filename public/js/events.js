@@ -11,7 +11,7 @@ $(function() {
         }, 300, "linear")
         setTimeout(function() {
           $("#status").animate({
-            top: "-48px"
+            top: -48
           }, 300, "linear")
         }, 2000);
         $(this).html("<span class='glyphicon glyphicon-ok' aria-hidden='true'></span>");
@@ -25,7 +25,7 @@ $(function() {
     $("#subject").val("RE: " + $(this).data("event").name);
     $("#body").val("Get more info here:\n" + $(this).data("event").url);
     form.animate({
-      left: 0
+      left: 10
     }, 300, "linear");
   });
 
@@ -42,7 +42,7 @@ $(function() {
       }, 300, "linear")
       setTimeout(function() {
         $("#status").animate({
-          top: "-48px"
+          top: -48
         }, 300, "linear")
       }, 2000);
     } else {
@@ -60,7 +60,7 @@ $(function() {
           }, 300, "linear")
           setTimeout(function() {
             $("#status").animate({
-              top: "-48px"
+              top: -48
             }, 300, "linear")
           }, 2000);
         }
