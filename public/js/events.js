@@ -20,6 +20,26 @@ $(function() {
     });
   });
 
+  $(".delete-event-btn").on("click", function() {
+    $.ajax({
+      url: '/users/' + $(this).data('id') + '/events/' + $(this).data('event').id,
+      method: 'DELETE',
+      data: $(this).data('event'),
+      success: (data) => {
+        $(this).closest('.event-row').remove();
+        $("#status").text(data);
+        $("#status").animate({
+          top: 0
+        }, 300, "linear")
+        setTimeout(function() {
+          $("#status").animate({
+            top: -48
+          }, 300, "linear")
+        }, 2000);
+      }
+    });
+  });
+
   $(".share-event-btn").on("click", function(e) {
     let form = $("#receiver-form");
     $("#subject").val("RE: " + $(this).data("event").name);
@@ -71,11 +91,13 @@ $(function() {
   $(".event-row").on("mouseenter", function() {
     $(this).find('.add-event-btn').css("display", "inline");
     $(this).find('.share-event-btn').css("display", "inline");
+    $(this).find('.delete-event-btn').css("display", "inline");
   });
 
   $(".event-row").on("mouseleave", function() {
     $(this).find('.add-event-btn').css("display", "none");
     $(this).find('.share-event-btn').css("display", "none");
+    $(this).find('.delete-event-btn').css("display", "none");
   });
 
   $("#compose-cancel").on("click", function() {

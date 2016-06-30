@@ -103,4 +103,15 @@ router.post('/:userId/messages', function(req, res, next) {
   });
 });
 
+router.delete('/:userId/events/:eventId', function(req, res, next) {
+  knex('users_events')
+  .where('user_id', req.body.user_id)
+  .andWhere('event_id', req.body.event_id)
+  .delete()
+  .returning('*')
+  .then(function(deletedEvent) {
+    res.json("Deleted event.");
+  })
+})
+
 module.exports = router;
