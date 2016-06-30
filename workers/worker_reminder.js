@@ -1,5 +1,5 @@
 'use strict';
-let knex = require('./db/knex'),
+let knex = require('../db/knex'),
     helper = require('sendgrid').mail,
     sg = require('sendgrid').SendGrid(process.env.SENDGRID_API_KEY);
 
