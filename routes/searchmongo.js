@@ -7,7 +7,7 @@ let MongoClient = require('mongodb').MongoClient,
     monk = require('monk');
     // db = monk(process.env.MONGOLAB_URI.split('//')[1]);
     console.log(process.env)
-    var db = monk(process.env.MONGOLAB_URI);
+    var db = monk(process.env.MONGODB_URI);
     console.log(process.env)
     // db = monk('localhost:27017/test');
 
