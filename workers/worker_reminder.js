@@ -80,7 +80,11 @@ function sendReminderEmail(userEvent) {
       .then( (updatedUserEvents) => {
         console.log(`Successfuly updated reminder field`);
         console.log(updatedUserEvents);
-      });
+      })
+      .catch( (error) => {
+        console.log('Failed to update reminder field')
+        console.log(error);
+      })
     } else {
       console.log("Failed to send reminder")
     }
