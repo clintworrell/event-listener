@@ -1,2 +1,2 @@
 web: npm start
-worker-reminder: node workers/worker_reminder.js
+workerReminder: node workers/worker_reminder.js
