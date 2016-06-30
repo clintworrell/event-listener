@@ -109,9 +109,13 @@ router.post('/search', function(req, res, next) {
       response.forEach(function(pair) {
         filteredEvents.push(pair[0]);
       })
+      allEvents = allEvents.concat(filteredEvents);
+      allEvents.sort(function(a, b) {
+        return new Date(a.date) - new Date(b.date);
+      })
       res.render('events', {
         title: "Events",
-        events: filteredEvents,
+        events: allEvents,
         username: req.session.username,
         id: req.session.id
       });
