@@ -43,11 +43,9 @@ function(request, accessToken, refreshToken, profile, done) {
 
 }));
 
-
 router.get('/google',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/plus.profile.emails.read'] })
 );
-
 
 router.get('/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
@@ -57,16 +55,5 @@ router.get('/google/callback',
     res.redirect(`/users/${req.user.id}`);
   }
 );
-
-
-
-
-
-
-
-
-
-
-
 
 module.exports = router;
