@@ -51,12 +51,42 @@ router.post('/login', function(req, res, next) {
         req.session.username = user.username;
         res.redirect('/users/' + req.session.id);
       } else {
-        res.render('index', {loginError: "Wrong password!"});
+        res.render('index', {loginError: "Invalid Username/Password"});
       }
-    } else {
-      res.render('index', {loginError: "Username not found!"});
     }
   });
+});
+
+router.post('/signup', function(req, res, next) {
+  if (req.body.password === req.body.password2) {
+    knex('users')
+    .where('username', req.body.username)
+    .orWhere('email', req.body.email)
+    .first()
+    .then(function(user) {
+      if (user) {
+        res.render('index', {signUpError: "Account already exists."});
+      } else {
+        let hash = bcrypt.hashSync(req.body.password, 10);
+        knex('users')
+        .insert({
+          username: req.body.username,
+          password: hash,
+          firstname: req.body.firstname,
+          lastname: req.body.lastname,
+          email: req.body.email
+        })
+        .returning('*')
+        .then(function(newUser) {
+          req.session.id = newUser[0].id;
+          req.session.username = newUser[0].username;
+          res.redirect('/users/' + req.session.id);
+        });
+      }
+    });
+  } else {
+    res.render('index', {signUpError: "Passwords do not match."})
+  }
 });
 
 module.exports = router;
