@@ -253,3 +253,7 @@ h1, input {
 .events-box {
   margin: 25px auto;
 }
+
+#google-signup, #google-login {
+  text-align: center;
+}
