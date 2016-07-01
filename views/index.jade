@@ -3,10 +3,10 @@ doctype html
 html(lang='en')
   head
     meta(charset='utf-8')
-    meta(http-equiv='X-UA-Compatible', content='IE=edge')
-    meta(name='viewport', content='width=device-width, initial-scale=1')
-    link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', rel='stylesheet')
-    link(rel='stylesheet', href='/stylesheets/index.css')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(name='viewport' content='width=device-width initial-scale=1')
+    link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' rel='stylesheet')
+    link(rel='stylesheet' href='/stylesheets/index.css')
     script(src='https://code.jquery.com/jquery-3.0.0.min.js')
     script(src='/js/index.js')
   body
@@ -14,31 +14,43 @@ html(lang='en')
       form#signup(method='POST' action='/signup')
         a#cancel-sign-up X
         h1 create an account
-        input.input.pass(name='firstname' type='text' placeholder='First name' autofocus='autofocus')
-        input.input.pass(name='lastname' type='text' placeholder='Last name')
-        input.input.pass(name='username', type='text', placeholder="What's your username?", required='required')
-        input.input.pass(name='email', type='email', placeholder='Email address')
-        input.input.pass(name='password', type='password', placeholder='Choose a password', required='required')
-        input.input.pass(name='password2', type='password', placeholder='Confirm password', required='required')
-        input.inputButton(type='submit', value='Sign me up!')
-      form(action='/auth/google' method='GET')
-        button.loginBtn.loginBtn--google(type='submit') Login with Google
-      if (signUpError)
-        p#warning
-          strong= signUpError
+        input.input.pass(name='firstname' type='text' placeholder='First name' autofocus='autofocus' required)
+        input.input.pass(name='lastname' type='text' placeholder='Last name' required)
+        input.input.pass(name='username' type='text' placeholder="What's your username?" required)
+        input.input.pass(name='email' type='email' placeholder='Email address' required)
+        input.input.pass(name='password' type='password' placeholder='Choose a password' required)
+        input.input.pass(name='password2' type='password' placeholder='Confirm password' required)
+        input.inputButton(type='submit' value='Sign me up!')
+        form(action='/auth/google' method='GET')
+          button.loginBtn.loginBtn--google(type='submit') Sign up with Google
+          if (signUpError)
+            p.warning
+              strong= signUpError
+    #loginbox(class=loginError ? '' : 'hidden')
+      form#signin(method='POST' action='/login')
+        a#cancel-login X
+        h1 log in
+        input.input.pass(name='username' type='text' placeholder="Username" required)
+        input.input.pass(name='password' type='password' placeholder='Password' required)
+        input.inputButton(type='submit' value='Log in!')
+        form(action='/auth/google' method='GET')
+          button.loginBtn.loginBtn--google(type='submit') Login with Google
+          if (loginError)
+            p.warning
+              strong= loginError
     div#indexnav
       ul
         li
-          a Login
+          a#login-btn Login
         li
           button.btn.btn-danger#sign-up-btn Sign up
     .container
       .row
         .col-md-12
-          a#logo(href='/', title='Logo')
-            img(src='/img/pinlogo.png', alt='Geotag Logo')
+          a#logo(href='/' title='Logo')
+            img(src='/img/pinlogo.png' alt='Geotag Logo')
           h2 Event Listener,
           h3 Providing events near you.
           form.search(action='/events/search' method='POST')
-            input#search-box(type='search', placeholder='Search events here...')
+            input#search-box(type='search' placeholder='Search events here...')
             button#search-btn Search
