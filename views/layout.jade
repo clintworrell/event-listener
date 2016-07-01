@@ -21,6 +21,7 @@ html(lang='en')
       script(src='/js/messages.js')
     if (title === "Message")
       link(rel='stylesheet', href='/stylesheets/message.css')
+      script(src='/js/messages.js')
     link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto')
   body
     div#status
@@ -32,7 +33,7 @@ html(lang='en')
       li
         a(class=(title === 'Saved Events' ? 'active' : '') href='/users/' + id + '/events') Saved
       li
-        a(class=(title === 'Messages' || title === 'Message' ? 'active' : '') href='/users/' + id + '/messages') Messages
+        a(class=(title === 'Messages' || title === 'Message' ? 'active' : '') id=newMessage ? "shine" : '' href='/users/' + id + '/messages') Messages
       li(style='float:right')
         a(href='/logout') Log Out
       li(style='float:right')

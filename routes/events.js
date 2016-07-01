@@ -7,18 +7,17 @@ let express = require('express'),
     searchMeetupEvents = require('./searchevents').searchMeetupEvents,
     EventBriteEvent = require('../models/events').EventBriteEvent,
     MeetupEvent = require('../models/events').MeetupEvent,
-    promisifyMongo = require('./searchmongo')
+    promisifyMongo = require('./searchmongo');
 
 router.get('/', function(req, res, next) {
   let currentPage = 1;
   if (req.query.page) {
-    if (req.query.page > 1) {
-      currentPage = req.query.page;
+    let pageQuery = parseInt(req.query.page);
+    if (pageQuery > 0) {
+      currentPage = pageQuery;
     } else {
-      res.redirect('/events');
+      res.redirect('/users/' + req.session.id + '/events');
     }
-  } else {
-    currentPage = 1;
   }
   knex('events').limit(5).offset((currentPage-1) * 5)
   .then(function(events) {
@@ -27,7 +26,8 @@ router.get('/', function(req, res, next) {
       events: events,
       username: req.session.username,
       id: req.session.id,
-      currentPage: parseInt(currentPage)
+      newMessage: req.session.newMessage,
+      currentPage: currentPage
     });
   });
 });
@@ -64,7 +64,7 @@ router.post('/', function(req, res, next) {
         name: req.body.name,
         url: req.body.url,
         start_time: req.body.start_time,
-        end_time: req.body.end_time,
+        end_time: req.body.end_time || null,
         organizer_name: req.body.organizer_name,
         venue_name: req.body.venue_name
       })
@@ -77,7 +77,7 @@ router.post('/', function(req, res, next) {
         })
         .returning('*')
         .then(function(newUserEvent) {
-          res.json("Event saved.*")
+          res.json("Event saved.")
         })
       });
     }
@@ -95,31 +95,44 @@ router.post('/search', function(req, res, next) {
   .then(function(searchResponse) {
     let meetupEvents = JSON.parse(searchResponse[0].body).results;
     let eventBriteEvents = JSON.parse(searchResponse[1].body).events;
-    let allEvents = [];
-    let eventBritePromises = [];
-    meetupEvents.forEach(function(event) {
-      allEvents.push(new MeetupEvent(event));
-    });
-    eventBriteEvents.forEach(function(event) {
-      eventBritePromises.push(promisifyMongo(new EventBriteEvent(event)));
-    });
-    Promise.all(eventBritePromises)
-    .then(function(response) {
-      let filteredEvents = [];
-      response.forEach(function(pair) {
-        filteredEvents.push(pair[0]);
-      })
-      allEvents = allEvents.concat(filteredEvents);
-      allEvents.sort(function(a, b) {
-        return new Date(a.date) - new Date(b.date);
-      })
+    console.log(meetupEvents);
+    console.log(eventBriteEvents);
+    if (!meetupEvents && (!eventBriteEvents || eventBriteEvents.length === 0)) {
       res.render('events', {
         title: "Events",
-        events: allEvents,
+        events: "Could not find events matching your query.",
         username: req.session.username,
-        id: req.session.id
+        id: req.session.id,
+        newMessage: req.session.newMessage
       });
-    })
+    } else {
+      let allEvents = [];
+      let eventBritePromises = [];
+      meetupEvents.forEach(function(event) {
+        allEvents.push(new MeetupEvent(event));
+      });
+      eventBriteEvents.forEach(function(event) {
+        eventBritePromises.push(promisifyMongo(new EventBriteEvent(event)));
+      });
+      Promise.all(eventBritePromises)
+      .then(function(response) {
+        let filteredEvents = [];
+        response.forEach(function(pair) {
+          filteredEvents.push(pair[0]);
+        });
+        allEvents = allEvents.concat(filteredEvents);
+        allEvents.sort(function(a, b) {
+          return new Date(a.date) - new Date(b.date);
+        });
+        res.render('events', {
+          title: "Events",
+          events: allEvents,
+          username: req.session.username,
+          id: req.session.id,
+          newMessage: req.session.newMessage
+        });
+      });
+    }
   })
   .catch(function(error) {
     res.json(error);

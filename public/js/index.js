@@ -1,6 +1,7 @@
 $(function() {
   $("#sign-up-btn").on("click", function() {
     $('#logbox').toggleClass('hidden');
+    $('#firstname').focus();
   });
 
   $("#cancel-sign-up").on("click", function() {
@@ -9,6 +10,7 @@ $(function() {
 
   $("#login-btn").on("click", function() {
     $('#loginbox').toggleClass('hidden');
+    $('#username').focus();
   });
 
   $("#cancel-login").on("click", function() {

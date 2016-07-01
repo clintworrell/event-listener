@@ -20,7 +20,8 @@ router.get('/:userId', function(req, res, next) {
     res.render('main', {
       title: "Main",
       username: req.session.username,
-      id: req.session.id
+      id: req.session.id,
+      newMessage: req.session.newMessage
     });
   });
 });
@@ -34,13 +35,14 @@ router.get('/:userId/messages', function(req, res, next) {
       title: "Messages",
       messages: messages,
       username: req.session.username,
-      id: req.session.id
+      id: req.session.id,
+      newMessage: req.session.newMessage
     })
   });
 });
 
 router.get('/:userId/messages/:messageId', function(req, res, next) {
-  knex('messages').select('messages.id', 'messages.subject', 'messages.date', 'messages.body', 'users.username')
+  knex('messages').select('messages.id', 'messages.subject', 'messages.date', 'messages.body', 'users.username', 'messages.receiver')
   .join('users', 'users.id', 'messages.sender')
   .where('receiver', req.session.id)
   .andWhere('messages.id', req.params.messageId)
@@ -61,13 +63,23 @@ router.get('/:userId/messages/:messageId', function(req, res, next) {
       title: "Message",
       message: message ? message : null,
       username: req.session.username,
-      id: req.session.id
+      id: req.session.id,
+      newMessage: req.session.newMessage
     });
   });
 });
 
 router.get('/:userId/events', function(req, res, next) {
-  knex('events')
+  let currentPage = 1;
+  if (req.query.page) {
+    let pageQuery = parseInt(req.query.page);
+    if (pageQuery > 0) {
+      currentPage = pageQuery;
+    } else {
+      res.redirect('/users/' + req.session.id + '/events');
+    }
+  }
+  knex('events').limit(5).offset((currentPage-1) * 5)
   .join('users_events', 'users_events.event_id', 'events.id')
   .where('users_events.user_id', req.session.id)
   .then(function(userEvents) {
@@ -75,7 +87,9 @@ router.get('/:userId/events', function(req, res, next) {
       title: "Saved Events",
       events: userEvents,
       username: req.session.username,
-      id: req.session.id
+      id: req.session.id,
+      newMessage: req.session.newMessage,
+      currentPage: currentPage
     })
   })
 });
@@ -100,6 +114,16 @@ router.post('/:userId/messages', function(req, res, next) {
     } else {
       res.json("User not found.");
     }
+  });
+});
+
+router.delete('/:userId/messages/:messageId', function(req, res, next) {
+  knex('messages')
+  .where('id', req.body.id)
+  .delete()
+  .returning('*')
+  .then(function(deletedMessage) {
+    res.json(deletedMessage);
   });
 });
 

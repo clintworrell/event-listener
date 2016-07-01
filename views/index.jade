@@ -14,7 +14,7 @@ html(lang='en')
       form#signup(method='POST' action='/signup')
         a#cancel-sign-up X
         h1 create an account
-        input.input.pass(name='firstname' type='text' placeholder='First name' autofocus='autofocus' required)
+        input.input.pass#firstname(name='firstname' type='text' placeholder='First name' autofocus='autofocus' required)
         input.input.pass(name='lastname' type='text' placeholder='Last name' required)
         input.input.pass(name='username' type='text' placeholder="What's your username?" required)
         input.input.pass(name='email' type='email' placeholder='Email address' required)
@@ -30,7 +30,7 @@ html(lang='en')
       form#signin(method='POST' action='/login')
         a#cancel-login X
         h1 log in
-        input.input.pass(name='username' type='text' placeholder="Username" required)
+        input.input.pass#username(name='username' type='text' placeholder="Username" required)
         input.input.pass(name='password' type='password' placeholder='Password' required)
         input.inputButton(type='submit' value='Log in!')
         form(action='/auth/google' method='GET')
@@ -52,5 +52,5 @@ html(lang='en')
           h2 Event Listener,
           h3 Providing events near you.
           form.search(action='/events/search' method='POST')
-            input#search-box(type='search' placeholder='Search events here...')
+            input#search-box(type='search' placeholder='Search events here...' autofocus)
             button#search-btn Search

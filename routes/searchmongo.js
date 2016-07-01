@@ -54,26 +54,4 @@ function promisifyVenue(event) {
   });
 }
 
-// organizers.update({organizerId: "10011042164"}, {$set: {organizerName: "International Monetary Fund"}});
-// organizers.update({organizerId: "7052835663"}, {$set: {organizerName: "World Wildlife Fund"}});
-// organizers.update({organizerId: "10882074003"}, {$set: {organizerName: "World Health Organization"}});
-// organizers.update({organizerId: "7488486017"}, {$set: {organizerName: "United Nations Children’s Fund (UNICEF)"}});
-// organizers.update({organizerId: "8380680968"}, {$set: {organizerName: "UNESCO"}});
-// organizers.update({organizerId: "299420373"}, {$set: {organizerName: "World Bank"}});
-// organizers.update({organizerId: "4267538111"}, {$set: {organizerName: "World Trade Organization"}});
-// organizers.update({organizerId: "299420373"}, {$set: {organizerName: "Group of 8"}});
-// organizers.update({organizerId: "10825985110"}, {$set: {organizerName: "United Nations"}});
-// organizers.update({organizerId: "299420373"}, {$set: {organizerName: "North Atlantic Treaty Organization"}});
-//
-// venues.update({venueId: "13884056"}, {$set: {venueName: "Bowery Ballroom"}});
-// venues.update({venueId: "15683449"}, {$set: {venueName: "Café du Nord"}});
-// venues.update({venueId: "15699021"}, {$set: {venueName: "Crocodile Café"}});
-// venues.update({venueId: "15823164"}, {$set: {venueName: "Department of Safety"}});
-// venues.update({venueId: "15405200"}, {$set: {venueName: "Doug Fir Lounge"}});
-// venues.update({venueId: "15797369"}, {$set: {venueName: "The Fillmore"}});
-// venues.update({venueId: "15735527"}, {$set: {venueName: "Tractor Tavern"}});
-// venues.update({venueId: "15728353"}, {$set: {venueName: "Gorge Ampitheater"}});
-// venues.update({venueId: "15519396"}, {$set: {venueName: "Great American Music Hal"}});
-// venues.update({venueId: "14150503"}, {$set: {venueName: "The Troubadour"}});
-
 module.exports = promisifyMongo

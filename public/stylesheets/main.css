@@ -60,3 +60,8 @@ button {
   width: 500px;
   z-index: 1;
 }
+
+#shine {
+  color: gold;
+  font-weight: bold;
+}
