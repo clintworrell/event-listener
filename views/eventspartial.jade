@@ -1,0 +1,27 @@
+.row.events-table
+  if (events)
+    table.events-box
+      each event in events
+        tbody.event-row
+          tr
+            td= event.start_time
+            td= event.organizer_name ? event.organizer_name : event.organizer_id
+          tr
+            td= event.end_time
+            td
+              a(href=event.url)
+                strong.event-name= event.name
+          tr
+            td(rowspan='2' style="text-align: center;")
+              if title === "Search"
+                button(data-event=event class="btn btn-primary add-event-btn" type="button")
+                  span(class="glyphicon glyphicon-plus" aria-hidden="true")
+              if title === "Main"
+                button(data-event=event data-id=id class="btn btn-danger delete-event-btn" type="button")
+                  span(class="glyphicon glyphicon-remove" aria-hidden="true")
+              button(data-event=event class="btn btn-success share-event-btn" type="button")
+                span(class="glyphicon glyphicon-share-alt" aria-hidden="true")
+            td= event.venue_name ? event.venue_name : event.venue_id
+          tr
+            td
+              | # of RSVPs

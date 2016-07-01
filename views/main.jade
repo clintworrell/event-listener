@@ -1,5 +1,11 @@
 extends layout
 
 block content
+  include shareevent
   div.container
-    h1 Welcome to Event Listener
+    div.row
+      div.col-md-12
+        h1 Your Events
+        a(href="/users/" + id + "/events?page=" + (currentPage - 1) class=(currentPage === 1 ? 'disabled' : '')) Previous 
+        a(href="/users/" + id + "/events?page=" + (currentPage + 1)) Next
+        include eventspartial

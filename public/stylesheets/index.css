@@ -1,4 +1,6 @@
-body {
+.index-block {
+  margin: 0;
+  width: 100%;
   background: url(/img/bg.jpeg) no-repeat center center fixed;
   background-color: #41B3FF;
   font-family: 'helvetica', 'verdana', sans-serif;
@@ -117,12 +119,10 @@ h2, h3 {
 
 form#signup {
   text-align: center;
-  height: 620px;
 }
 
 form#signin {
   text-align: center;
-  height: 380px;
 }
 
 h1 {
@@ -248,4 +248,8 @@ h1, input {
 .warning {
   margin-top: 15px;
   color: red;
+}
+
+.events-box {
+  margin: 25px auto;
 }

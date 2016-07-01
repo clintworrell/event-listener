@@ -7,8 +7,13 @@ function searchEventBriteEvents(keyword, location, radius) {
   return promisifyGet(url);
 }
 
-function searchMeetupEvents(topic, city, radius) {
-  let url = `https://api.meetup.com/2/open_events?key=${process.env.MEETUP_API_KEY}&topic=${topic}&city=${city}&radius=${radius}&sign=true`;
+function searchMeetupEvents(topic, city, radius, latitude, longitude) {
+  let url;
+  if(latitude && longitude) {
+    url = `https://api.meetup.com/2/open_events?key=${process.env.MEETUP_API_KEY}&status=upcoming&page=15&lat=${latitude}&lon=${longitude}&radius=${radius}&sign=true`;
+  } else {
+    url = `https://api.meetup.com/2/open_events?key=${process.env.MEETUP_API_KEY}&status=upcoming&topic=${topic}&city=${city}&radius=${radius}&sign=true`;
+  }
 
   return promisifyGet(url);
 }
@@ -26,8 +31,29 @@ function promisifyGet(url) {
     });
 }
 
+function parseDate(eventTime) {
+  if (eventTime) {
+    let timeString = eventTime.toString();
+    let dateArr = timeString.split(" ");
+    let month = dateArr[1];
+    let date = dateArr[2];
+    let year = dateArr[3];
+    let time = dateArr[4];
+    let timeArr = time.split(":");
+    let hours = timeArr[0];
+    let minutes = timeArr[1];
+    if (hours > 12) {
+      hours -= 12;
+      minutes = minutes + " PM";
+    } else {
+      minutes = minutes + " AM";
+    }
+    return `${month} ${date} ${year}, ${hours}:${minutes}`;
+  }
+}
 
 module.exports = {
   searchEventBriteEvents: searchEventBriteEvents,
-  searchMeetupEvents: searchMeetupEvents
+  searchMeetupEvents: searchMeetupEvents,
+  parseDate: parseDate
 };

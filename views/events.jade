@@ -1,68 +1,28 @@
 extends layout
  
 block content
-  div#receiver-form
-    form#compose(action='/users/' + id + '/messages' method='POST')
-      div.form-group
-        label(for='receiver') To:
-        input.form-control#receiver(name='receiver' type="text")
-      div.form-group
-        label(for='subject') Subject:
-        input.form-control#subject(name='subject' type="text" value= compose ? compose.subject : '')
-      div.form-group
-        label(for='body') Body:
-        textarea.form-control#body(name='body' rows='7')= compose ? compose.body : ''
-      div.form-group(style="text-align: center;")
-        input.btn.btn-danger#compose-cancel(data-id=id type="button" value="Cancel")    
-        input.btn.btn-success#compose-submit(data-id=id type="button" value="Send Message")
+  include shareevent
   div.container
-    h1= title === "Events" ? "Events" : "Saved Events"
+    h1 Search
     div.row
       div.col-md-4
         form.form-horizontal(action="/events/search", method="post")
           div.form-group
             label Keyword
-            input.form-control(type="text",  name="keyword", placeholder="ex) hiking, coffee")
+            input.form-control(type="text",  name="keyword", placeholder="ex) hiking, coffee" required)
           div.form-group
             label Location
-            input.form-control(type="text",  name="location", placeholder="ex) san francisco")
+            input.form-control(type="text",  name="location", placeholder="ex) san francisco" required)
           div.form-group
             label Search radius
-            input.form-control(type="text",  name="radius", placeholder="ex) 10mi")
+            input.form-control(type="text",  name="radius", placeholder="ex) 10mi" required)
           div.form-group
-            button.btn.btn-large.btn-success(type="submit") Find Events
+            button.btn.btn-large.btn-success#search-btn(type="submit") Find Events
       div.col-md-8
         if (events === "Could not find events matching your query.")
           h4= events
         else
-          if (title === "Events")
+          if (title === "Search")
             a(href="/events?page=" + (currentPage - 1) class=(currentPage === 1 ? 'disabled' : '')) Previous 
             a(href="/events?page=" + (currentPage + 1)) Next
-          if (title === "Saved Events")
-            a(href="/users/" + id + "/events?page=" + (currentPage - 1) class=(currentPage === 1 ? 'disabled' : '')) Previous 
-            a(href="/users/" + id + "/events?page=" + (currentPage + 1)) Next
-          table
-            each event in events
-              tbody.event-row
-                tr
-                  td= event.start_time
-                  td= event.organizer_name ? event.organizer_name : event.organizer_id
-                tr
-                  td= event.end_time
-                  td
-                    a(href=event.url)
-                      strong.event-name= event.name
-                tr
-                  td(rowspan='2' style="text-align: center;")
-                    if title === "Events"
-                      button(data-event=event class="btn btn-primary add-event-btn" type="button")
-                        span(class="glyphicon glyphicon-plus" aria-hidden="true")
-                    if title === "Saved Events"
-                      button(data-event=event data-id=id class="btn btn-danger delete-event-btn" type="button")
-                        span(class="glyphicon glyphicon-remove" aria-hidden="true")
-                    button(data-event=event class="btn btn-success share-event-btn" type="button")
-                      span(class="glyphicon glyphicon-share-alt" aria-hidden="true")
-                  td= event.venue_name ? event.venue_name : event.venue_id
-                tr
-                  td
-                    | # of RSVPs
+          include eventspartial

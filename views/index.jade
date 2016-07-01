@@ -1,4 +1,3 @@
-
 doctype html
 html(lang='en')
   head
@@ -7,6 +6,7 @@ html(lang='en')
     meta(name='viewport' content='width=device-width initial-scale=1')
     link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' rel='stylesheet')
     link(rel='stylesheet' href='/stylesheets/index.css')
+    link(rel='stylesheet' href='/stylesheets/events.css')
     script(src='https://code.jquery.com/jquery-3.0.0.min.js')
     script(src='/js/index.js')
   body
@@ -21,11 +21,11 @@ html(lang='en')
         input.input.pass(name='password' type='password' placeholder='Choose a password' required)
         input.input.pass(name='password2' type='password' placeholder='Confirm password' required)
         input.inputButton(type='submit' value='Sign me up!')
-        form(action='/auth/google' method='GET')
-          button.loginBtn.loginBtn--google(type='submit') Sign up with Google
-          if (signUpError)
-            p.warning
-              strong= signUpError
+      form(action='/auth/google' method='GET')
+        button.loginBtn.loginBtn--google(type='submit') Sign up with Google
+        if (signUpError)
+          p.warning
+            strong= signUpError
     #loginbox(class=loginError ? '' : 'hidden')
       form#signin(method='POST' action='/login')
         a#cancel-login X
@@ -33,18 +33,18 @@ html(lang='en')
         input.input.pass#username(name='username' type='text' placeholder="Username" required)
         input.input.pass(name='password' type='password' placeholder='Password' required)
         input.inputButton(type='submit' value='Log in!')
-        form(action='/auth/google' method='GET')
-          button.loginBtn.loginBtn--google(type='submit') Login with Google
-          if (loginError)
-            p.warning
-              strong= loginError
+      form(action='/auth/google' method='GET')
+        button.loginBtn.loginBtn--google(type='submit') Login with Google
+        if (loginError)
+          p.warning
+            strong= loginError
     div#indexnav
       ul
         li
           a#login-btn Login
         li
           button.btn.btn-danger#sign-up-btn Sign up
-    .container
+    .container.index-block 
       .row
         .col-md-12
           a#logo(href='/' title='Logo')
@@ -54,3 +54,4 @@ html(lang='en')
           form.search(action='/events/search' method='POST')
             input#search-box(type='search' placeholder='Search events here...' autofocus)
             button#search-btn Search
+    include eventspartial

@@ -13,7 +13,7 @@ html(lang='en')
     link(rel='stylesheet', href='/stylesheets/main.css')
     script(src='https://code.jquery.com/jquery-3.0.0.min.js')
     script(src='/js/main.js')
-    if (title === 'Events' || title === 'Saved Events')
+    if (title === 'Main' || title === 'Search')
       link(rel='stylesheet', href='/stylesheets/events.css')
       script(src='/js/events.js')
     if (title === 'Messages')
@@ -27,11 +27,9 @@ html(lang='en')
     div#status
     ul
       li
-        a(class=(title === 'Main' ? 'active' : '') href='/') Home
+        a(class=(title === 'Main' ? 'active' : '') href='/users/' + id + '/events') Home
       li
-        a(class=(title === 'Events' ? 'active' : '') href='/events') Events
-      li
-        a(class=(title === 'Saved Events' ? 'active' : '') href='/users/' + id + '/events') Saved
+        a(class=(title === 'Search' ? 'active' : '') href='/events') Search
       li
         a(class=(title === 'Messages' || title === 'Message' ? 'active' : '') id=newMessage ? "shine" : '' href='/users/' + id + '/messages') Messages
       li(style='float:right')

@@ -3,7 +3,8 @@
 let express = require('express'),
     router = express.Router(),
     knex = require('../db/knex'),
-    bcrypt = require('bcrypt');
+    bcrypt = require('bcrypt'),
+    parseDate = require('./searchevents').parseDate;
 
 router.use('/:userId*', function(req, res, next) {
   if (req.session.id == req.params.userId) {
@@ -83,8 +84,12 @@ router.get('/:userId/events', function(req, res, next) {
   .join('users_events', 'users_events.event_id', 'events.id')
   .where('users_events.user_id', req.session.id)
   .then(function(userEvents) {
-    res.render('events', {
-      title: "Saved Events",
+    userEvents.forEach(function(event) {
+      event.start_time = parseDate(event.start_time);
+      event.end_time = parseDate(event.end_time);
+    });
+    res.render('main', {
+      title: "Main",
       events: userEvents,
       username: req.session.username,
       id: req.session.id,
