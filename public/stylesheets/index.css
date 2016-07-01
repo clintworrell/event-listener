@@ -85,6 +85,7 @@ h2, h3 {
 
 #logbox {
   background-color: #fff;
+  box-shadow: 0 0 1em #000;
   float: none;
   height: 620px;
   left: 50%;
@@ -100,6 +101,7 @@ h2, h3 {
 
 #loginbox {
   background-color: #fff;
+  box-shadow: 0 0 1em #000;
   float: none;
   height: 380px;
   left: 50%;

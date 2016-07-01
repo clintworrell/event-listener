@@ -67,7 +67,16 @@ router.get('/:userId/messages/:messageId', function(req, res, next) {
 });
 
 router.get('/:userId/events', function(req, res, next) {
-  knex('events')
+  let currentPage = 1;
+  if (req.query.page) {
+    let pageQuery = parseInt(req.query.page);
+    if (pageQuery > 0) {
+      currentPage = pageQuery;
+    } else {
+      res.redirect('/users/' + req.session.id + '/events');
+    }
+  }
+  knex('events').limit(5).offset((currentPage-1) * 5)
   .join('users_events', 'users_events.event_id', 'events.id')
   .where('users_events.user_id', req.session.id)
   .then(function(userEvents) {
@@ -75,7 +84,8 @@ router.get('/:userId/events', function(req, res, next) {
       title: "Saved Events",
       events: userEvents,
       username: req.session.username,
-      id: req.session.id
+      id: req.session.id,
+      currentPage: currentPage
     })
   })
 });
