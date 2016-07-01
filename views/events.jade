@@ -25,24 +25,4 @@ block content
           if (title === "Search")
             a(href="/events?page=" + (currentPage - 1) class=(currentPage === 1 ? 'disabled' : '')) Previous 
             a(href="/events?page=" + (currentPage + 1)) Next
-          table
-            each event in events
-              tbody.event-row
-                tr
-                  td= event.start_time
-                  td= event.organizer_name ? event.organizer_name : event.organizer_id
-                tr
-                  td= event.end_time
-                  td
-                    a(href=event.url)
-                      strong.event-name= event.name
-                tr
-                  td(rowspan='2' style="text-align: center;")
-                    button(data-event=event class="btn btn-primary add-event-btn" type="button")
-                      span(class="glyphicon glyphicon-plus" aria-hidden="true")
-                    button(data-event=event class="btn btn-success share-event-btn" type="button")
-                      span(class="glyphicon glyphicon-share-alt" aria-hidden="true")
-                  td= event.venue_name ? event.venue_name : event.venue_id
-                tr
-                  td
-                    | # of RSVPs
+          include eventspartial
