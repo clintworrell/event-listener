@@ -83,8 +83,8 @@ router.get('/:userId/events', function(req, res, next) {
   .join('users_events', 'users_events.event_id', 'events.id')
   .where('users_events.user_id', req.session.id)
   .then(function(userEvents) {
-    res.render('events', {
-      title: "Saved Events",
+    res.render('main', {
+      title: "Main",
       events: userEvents,
       username: req.session.username,
       id: req.session.id,

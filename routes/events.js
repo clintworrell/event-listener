@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
   knex('events').limit(5).offset((currentPage-1) * 5)
   .then(function(events) {
     res.render('events', {
-      title: "Events",
+      title: "Search",
       events: events,
       username: req.session.username,
       id: req.session.id,
@@ -99,7 +99,7 @@ router.post('/search', function(req, res, next) {
     console.log(eventBriteEvents);
     if (!meetupEvents && (!eventBriteEvents || eventBriteEvents.length === 0)) {
       res.render('events', {
-        title: "Events",
+        title: "Search",
         events: "Could not find events matching your query.",
         username: req.session.username,
         id: req.session.id,
@@ -125,7 +125,7 @@ router.post('/search', function(req, res, next) {
           return new Date(a.date) - new Date(b.date);
         });
         res.render('events', {
-          title: "Events",
+          title: "Search",
           events: allEvents,
           username: req.session.username,
           id: req.session.id,
