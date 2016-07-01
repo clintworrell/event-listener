@@ -52,6 +52,8 @@ html(lang='en')
           h2 Event Listener,
           h3 Providing events near you.
           form.search(action='/events/search' method='POST')
-            input#search-box(type='search' placeholder='Search events here...' autofocus)
+            input.search-form(type='search' name='keyword' placeholder='ex) hiking, coffee' autofocus)
+            input.search-form(type='search' name='location' placeholder='ex) san francisco' autofocus)
+            input.search-form(type='search' name='radius' placeholder='ex) 10mi' autofocus)
             button#search-btn Search
     include eventspartial

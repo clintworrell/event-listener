@@ -25,22 +25,25 @@ h2, h3 {
   margin-top: 5%;
 }
 
-#search-box, #search-btn {
+.search-form, #search-btn {
   font-size: 20px;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   font-family: inherit;
 }
 
-#search-box {
+.search-form:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  width: 400px;
+}
+
+.search-form {
   margin: 0;
   padding: 0 10px;
   background-color: #f8f8f8;
   border: 0;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
   opacity:0.85;
-  width: 800px;
   height: 60px;
 }
 
