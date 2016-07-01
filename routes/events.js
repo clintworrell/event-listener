@@ -5,6 +5,7 @@ let express = require('express'),
     knex = require('../db/knex'),
     searchEventBriteEvents = require('./searchevents').searchEventBriteEvents,
     searchMeetupEvents = require('./searchevents').searchMeetupEvents,
+    parseDate = require('./searchevents').parseDate,
     EventBriteEvent = require('../models/events').EventBriteEvent,
     MeetupEvent = require('../models/events').MeetupEvent,
     promisifyMongo = require('./searchmongo');
@@ -21,6 +22,10 @@ router.get('/', function(req, res, next) {
   }
   knex('events').limit(5).offset((currentPage-1) * 5)
   .then(function(events) {
+    events.forEach(function(event) {
+      event.start_time = parseDate(event.start_time);
+      event.end_time = parseDate(event.end_time);
+    });
     res.render('events', {
       title: "Search",
       events: events,
@@ -123,6 +128,10 @@ router.post('/search', function(req, res, next) {
         allEvents = allEvents.concat(filteredEvents);
         allEvents.sort(function(a, b) {
           return new Date(a.date) - new Date(b.date);
+        });
+        allEvents.forEach(function(event) {
+          event.start_time = parseDate(event.start_time);
+          event.end_time = parseDate(event.end_time);
         });
         res.render('events', {
           title: "Search",

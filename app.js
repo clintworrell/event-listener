@@ -63,7 +63,9 @@ app.use('*', function(req, res, next) {
       if (messages.length > 0) {
         req.session.newMessage = true;
       } else {
-        req.session.newMessage = false;
+        if (req.session) {
+          req.session.newMessage = false;
+        }
       }
     })
   }
