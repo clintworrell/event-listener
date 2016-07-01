@@ -1,19 +1,20 @@
 table#inbox
-  thead
-    tr
-      th
-      th From
-      th Subject
-      th Date
-  tbody
-    each message in messages
+  if (messages.length > 0)
+    thead
       tr
-        td
-          input(data-message=message type="checkbox")
-        td(class=(message.read ? '' : "unread"))= message.username
-        td
-          a(class=(message.read ? '' : "unread") href='/users/' + id + '/messages/' + message.id)= message.subject
-        td(class=(message.read ? '' : "unread"))= message.date
+        th
+        th From
+        th Subject
+        th Date
+    tbody
+      each message in messages
+        tr
+          td
+            input(data-message=message type="checkbox")
+          td(class=(message.read ? '' : "unread"))= message.username
+          td
+            a(class=(message.read ? '' : "unread") href='/users/' + id + '/messages/' + message.id)= message.subject
+          td(class=(message.read ? '' : "unread"))= message.date
 div.container
   div.row
     div.col-md-3
@@ -27,7 +28,7 @@ div.container
           input.form-control#subject(name='subject' type="text" value= compose ? compose.subject : '')
         div.form-group
           label(for='body') Body:
-          textarea.form-control#body(name='body')= compose ? compose.body : ''
+          textarea.form-control#body(name='body' rows='8')= compose ? compose.body : ''
         div.form-group(style="text-align: center;")
           input.btn.btn-success#compose-submit(data-id=id type="button" value="Send Message")
     div.col-md-3

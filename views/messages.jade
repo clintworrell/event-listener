@@ -5,9 +5,10 @@ block content
     div.row
       div.col-md-12#messages-container
         h1 Messages
-        button.btn.btn-primary#inbox-btn(type="button") Inbox
-        button.btn.btn-default#compose-btn(type="button") Compose
-        button.btn.btn-danger#delete-btn(data-id=id type="button" disabled) Delete selected
+        if (title === "Messages")
+          button.btn.btn-primary#inbox-btn(type="button") Inbox
+          button.btn.btn-default#compose-btn(type="button") Compose
+        button.btn.btn-danger#delete-btn(data-id=id data-message=message type="button" disabled=title === "Messages" ? true : false) Delete
         if (title === "Messages")
           include inbox
         if (title === "Message")

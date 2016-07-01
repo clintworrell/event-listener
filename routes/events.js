@@ -26,6 +26,7 @@ router.get('/', function(req, res, next) {
       events: events,
       username: req.session.username,
       id: req.session.id,
+      newMessage: req.session.newMessage,
       currentPage: currentPage
     });
   });
@@ -94,12 +95,15 @@ router.post('/search', function(req, res, next) {
   .then(function(searchResponse) {
     let meetupEvents = JSON.parse(searchResponse[0].body).results;
     let eventBriteEvents = JSON.parse(searchResponse[1].body).events;
-    if (meetupEvents === undefined && eventBriteEvents.length === 0) {
+    console.log(meetupEvents);
+    console.log(eventBriteEvents);
+    if (meetupEvents === undefined && !eventBriteEvents.length === 0) {
       res.render('events', {
         title: "Events",
         events: "Could not find events matching your query.",
         username: req.session.username,
-        id: req.session.id
+        id: req.session.id,
+        newMessage: req.session.newMessage
       });
     } else {
       let allEvents = [];
@@ -124,7 +128,8 @@ router.post('/search', function(req, res, next) {
           title: "Events",
           events: allEvents,
           username: req.session.username,
-          id: req.session.id
+          id: req.session.id,
+          newMessage: req.session.newMessage
         });
       });
     }

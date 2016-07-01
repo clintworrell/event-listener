@@ -19,7 +19,7 @@ $(function() {
       method: 'POST',
       data: message,
       success: (data) => {
-        animateSlide("#status", "top", 48, 300, data);
+        window.location.replace('/users/' + $(this).data('id') + '/messages');
       }
     })
   });
@@ -29,21 +29,31 @@ $(function() {
   });
 
   $("#delete-btn").on("click", function() {
-    let messageIds = [];
-    let selectedMessages = $("input:checked").map(function() {
-      messageIds.push($(this).data('message').id);
-    })
-    $.ajax({
-      url: '/users/' + $(this).data('id') + '/messages',
-      method: "DELETE",
-      data: {messageIds: messageIds},
-      success: (data) => {
-        animateSlide("#status", "top", 48, 300, data);
-      }
-    })
+    if ($(this).data('message')) {
+      let message = $(this).data('message');
+      $.ajax({
+        url: '/users/' + $(this).data('id') + '/messages/' + message.id,
+        method: "DELETE",
+        data: message,
+        success: (data) => {
+          window.location.replace('/users/' + $(this).data('id') + '/messages');
+        }
+      })
+    } else {
+      let messageIds = [];
+      let selectedMessages = $("input:checked").map(function() {
+        messageIds.push($(this).data('message').id);
+      })
+      $.ajax({
+        url: '/users/' + $(this).data('id') + '/messages',
+        method: "DELETE",
+        data: {messageIds: messageIds},
+        success: (data) => {
+          window.location.replace('/users/' + $(this).data('id') + '/messages');
+        }
+      });
+    }
   })
-
-  $("#delete-btn")
 
   function select(element) {
     $(element).show();

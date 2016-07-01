@@ -8,6 +8,7 @@ let express = require('express'),
     cookieParser = require('cookie-parser'),
     cookieSession = require("cookie-session"),
     bodyParser = require('body-parser'),
+    knex = require('./db/knex'),
 
     geoip = require('./routes/geoip'),
 
@@ -53,6 +54,22 @@ passport.deserializeUser(function(id, done) {
   done(null, id);
 });
 
+app.use('*', function(req, res, next) {
+  if (req.session.id) {
+    knex('messages')
+    .where('receiver', req.session.id)
+    .andWhere('read', false)
+    .then(function(messages) {
+      if (messages.length > 0) {
+        req.session.newMessage = true;
+      } else {
+        req.session.newMessage = false;
+      }
+    })
+  }
+  next();
+})
+
 app.use('/geoip', geoip);
 app.use('/', routes);
 app.use('/users', users);
@@ -60,9 +77,6 @@ app.use('/events', events);
 app.use('/api/v1/users', usersApi);
 app.use('/api/v1/events', eventsApi);
 app.use('/auth', authRoute);
-
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
