@@ -53,6 +53,8 @@ router.post('/login', function(req, res, next) {
       } else {
         res.render('index', {loginError: "Invalid Username/Password"});
       }
+    } else {
+      res.render('index', {loginError: "Invalid Username/Password"});
     }
   });
 });

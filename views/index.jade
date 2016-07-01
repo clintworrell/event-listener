@@ -21,11 +21,11 @@ html(lang='en')
         input.input.pass(name='password' type='password' placeholder='Choose a password' required)
         input.input.pass(name='password2' type='password' placeholder='Confirm password' required)
         input.inputButton(type='submit' value='Sign me up!')
-        form(action='/auth/google' method='GET')
-          button.loginBtn.loginBtn--google(type='submit') Sign up with Google
-          if (signUpError)
-            p.warning
-              strong= signUpError
+      form(action='/auth/google' method='GET')
+        button.loginBtn.loginBtn--google(type='submit') Sign up with Google
+        if (signUpError)
+          p.warning
+            strong= signUpError
     #loginbox(class=loginError ? '' : 'hidden')
       form#signin(method='POST' action='/login')
         a#cancel-login X
@@ -33,11 +33,11 @@ html(lang='en')
         input.input.pass#username(name='username' type='text' placeholder="Username" required)
         input.input.pass(name='password' type='password' placeholder='Password' required)
         input.inputButton(type='submit' value='Log in!')
-        form(action='/auth/google' method='GET')
-          button.loginBtn.loginBtn--google(type='submit') Login with Google
-          if (loginError)
-            p.warning
-              strong= loginError
+      form(action='/auth/google' method='GET')
+        button.loginBtn.loginBtn--google(type='submit') Login with Google
+        if (loginError)
+          p.warning
+            strong= loginError
     div#indexnav
       ul
         li
