@@ -52,7 +52,7 @@ router.get('/google/callback',
   function(req, res) {
     req.session.id = req.user.id;
     req.session.username = req.user.username;
-    res.redirect(`/users/${req.user.id}`);
+    res.redirect(`/users/${req.user.id}/events`);
   }
 );
 
