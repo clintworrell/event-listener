@@ -97,7 +97,7 @@ router.post('/search', function(req, res, next) {
     let eventBriteEvents = JSON.parse(searchResponse[1].body).events;
     console.log(meetupEvents);
     console.log(eventBriteEvents);
-    if (meetupEvents === undefined && !eventBriteEvents.length === 0) {
+    if (!meetupEvents && (!eventBriteEvents || eventBriteEvents.length === 0)) {
       res.render('events', {
         title: "Events",
         events: "Could not find events matching your query.",
