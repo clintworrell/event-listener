@@ -1,4 +1,6 @@
-body {
+.index-block {
+  margin: 0;
+  width: 100%;
   background: url(/img/bg.jpeg) no-repeat center center fixed;
   background-color: #41B3FF;
   font-family: 'helvetica', 'verdana', sans-serif;
@@ -246,4 +248,8 @@ h1, input {
 .warning {
   margin-top: 15px;
   color: red;
+}
+
+.events-box {
+  margin: 25px auto;
 }

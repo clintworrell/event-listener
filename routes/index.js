@@ -4,35 +4,53 @@ let express = require('express'),
     router = express.Router(),
     knex = require('../db/knex'),
     bcrypt = require('bcrypt'),
-    geoip = require('geoip-lite'),
-    requestIp = require('request-ip');
-
-router.use(requestIp.mw());
-
-router.use(function(req, res, next){
-  var ip = req.clientIp;
-  console.log(ip)
-  var geo = geoip.lookup(ip);
-  console.log(geo)
-  if(geo) {
-    res.locals.location = {
-      city: geo.city,
-      state: geo.region,
-      country: geo.country
-    };
-  }
-  console.log(res.locals.location);
-  next();
-  // res.json({ip: ip, geo:geo});
-});
-
+    searchMeetupEvents = require('./searchevents').searchMeetupEvents,
+    parseDate = require('./searchevents').parseDate,
+    MeetupEvent = require('../models/events').MeetupEvent;
 
 router.get('/', function(req, res, next) {
   if (req.session.id) {
-    res.redirect('/users/' + req.session.id);
+    res.redirect('/users/' + req.session.id + '/events');
   } else {
     res.render('index');
   }
+});
+
+router.post('/', function(req, res, next) {
+  let latitude = req.body.latitude;
+  let longitude = req.body.longitude;
+
+  req.session.location = {
+    latitude: latitude,
+    longitude: longitude
+  }
+  let keyword = null;
+  let location = null;
+  let meetupRadius = 10;
+  let allEvents = [];
+  if(latitude && longitude) {
+    let meetupEvents = searchMeetupEvents(keyword, location, meetupRadius, latitude, longitude);
+    meetupEvents
+    .then(function(searchResponse) {
+      let meetupEvents = JSON.parse(searchResponse.body).results;
+      allEvents = meetupEvents.map(function(event) {
+        return new MeetupEvent(event);
+      });
+      allEvents.sort(function(a, b) {
+        return new Date(a.date) - new Date(b.date);
+      });
+
+      allEvents.forEach(function(event) {
+        event.start_time = parseDate(event.start_time);
+        event.end_time = parseDate(event.end_time);
+      });
+      res.render('eventspartial', {
+        events: allEvents
+      });
+
+    });
+  }
+
 });
 
 router.get('/logout', function(req, res, next) {
@@ -49,7 +67,7 @@ router.post('/login', function(req, res, next) {
       if (bcrypt.compareSync(req.body.password, user.password)) {
         req.session.id = user.id;
         req.session.username = user.username;
-        res.redirect('/users/' + req.session.id);
+        res.redirect('/users/' + req.session.id + '/events');
       } else {
         res.render('index', {loginError: "Invalid Username/Password"});
       }

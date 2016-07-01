@@ -7,8 +7,13 @@ function searchEventBriteEvents(keyword, location, radius) {
   return promisifyGet(url);
 }
 
-function searchMeetupEvents(topic, city, radius) {
-  let url = `https://api.meetup.com/2/open_events?key=${process.env.MEETUP_API_KEY}&topic=${topic}&city=${city}&radius=${radius}&sign=true`;
+function searchMeetupEvents(topic, city, radius, latitude, longitude) {
+  let url;
+  if(latitude && longitude) {
+    url = `https://api.meetup.com/2/open_events?key=${process.env.MEETUP_API_KEY}&status=upcoming&page=15&lat=${latitude}&lon=${longitude}&radius=${radius}&sign=true`;
+  } else {
+    url = `https://api.meetup.com/2/open_events?key=${process.env.MEETUP_API_KEY}&status=upcoming&topic=${topic}&city=${city}&radius=${radius}&sign=true`;
+  }
 
   return promisifyGet(url);
 }
